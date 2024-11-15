@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_14_071606) do
+ActiveRecord::Schema.define(version: 2024_11_15_055359) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,7 +52,12 @@ ActiveRecord::Schema.define(version: 2024_11_14_071606) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "diaries", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "genre_id"
     t.integer "game_id"
@@ -66,10 +71,25 @@ ActiveRecord::Schema.define(version: 2024_11_14_071606) do
     t.integer "deleted_by", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_posts_on_game_id"
-    t.index ["genre_id"], name: "index_posts_on_genre_id"
-    t.index ["group_id"], name: "index_posts_on_group_id"
-    t.index ["user_id"], name: "index_posts_on_user_id"
+    t.index ["game_id"], name: "index_diaries_on_game_id"
+    t.index ["genre_id"], name: "index_diaries_on_genre_id"
+    t.index ["group_id"], name: "index_diaries_on_group_id"
+    t.index ["user_id"], name: "index_diaries_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
