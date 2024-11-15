@@ -1,5 +1,21 @@
 Rails.application.routes.draw do
   namespace :public do
+    get 'events/new'
+    get 'events/index'
+    get 'events/show'
+    get 'events/edit'
+    get 'events/update'
+    get 'events/create'
+    get 'events/destroy'
+  end
+  namespace :admin do
+    get 'events/index'
+    get 'events/show'
+    get 'events/edit'
+    get 'events/update'
+    get 'events/destroy'
+  end
+  namespace :public do
     get 'comments/create'
     get 'comments/edit'
     get 'comments/update'
@@ -53,8 +69,8 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: "homes#top"
 
-    # Postsコントローラ
-    resources :posts, only: [:new, :show, :create, :edit, :update, :destroy] do
+    # Diariesコントローラ
+    resources :diaries, only: [:new, :show, :create, :edit, :update, :destroy] do
       resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Post' }
       resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Post' }
       # , param: :id, defaults: { commentable_type: 'Event' }を追記
@@ -74,7 +90,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "homes#top"
     # Postsコントローラ
-    resources :posts, only: [:index, :show, :edit, :update, :destroy] do
+    resources :diaries, only: [:index, :show, :edit, :update, :destroy] do
       resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Post' }
     end
   end
