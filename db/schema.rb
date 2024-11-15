@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_15_060920) do
+ActiveRecord::Schema.define(version: 2024_11_15_080746) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 2024_11_15_060920) do
   create_table "comments", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id", null: false
+    t.integer "commentable_id", null: false
+    t.string "commentable_type", null: false
+    t.text "body", null: false
+    t.boolean "is_deleted", default: false
+    t.string "deleted_by"
+    t.text "deleted_reason"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "diaries", force: :cascade do |t|
