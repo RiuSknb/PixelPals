@@ -1,5 +1,4 @@
 <div style="background-color: #f0f8ff; padding: 10px;">
-  <p style="font-size: 13px;">好きなゲームのコミュニティーサイト</p>
   <% if user_signed_in? %>
     <p><%= current_user.name %>さん、こんにちは！</p>
     <%= link_to 'Top', root_path %> |
@@ -11,6 +10,5 @@
     <%= link_to 'Diary', index_diaries_path %> |
     <%= link_to 'Log in', new_user_session_path %> |
     <%= link_to 'Sign in', new_user_registration_path %>
-    
   <% end %>
 </div>
