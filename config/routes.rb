@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'games/index'
+    get 'games/show'
+  end
+  namespace :admin do
+    get 'games/new'
+    get 'games/index'
+    get 'games/show'
+    get 'games/create'
+    get 'games/edit'
+    get 'games/update'
+    get 'games/destroy'
+  end
   namespace :admin do
     get 'genres/new'
     get 'genres/index'
