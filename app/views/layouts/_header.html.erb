@@ -7,7 +7,7 @@
     <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
   <% else %> 
     <%= link_to 'Top', root_path %> |
-    <%= link_to 'Diary', index_diaries_path %> |
+    <%= link_to 'Diary', diaries_path %> |
     <%= link_to 'Log in', new_user_session_path %> |
     <%= link_to 'Sign in', new_user_registration_path %>
   <% end %>
