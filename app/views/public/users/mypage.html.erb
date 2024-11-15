@@ -1,15 +1,15 @@
-<div class="mypage">
-  <h1><%= @user.name %>さんのマイページ</h1>
+<div class='container'>
+  <h3><%= @user.name %>&nbsp;さんのマイページ</h3>
 
   <div class="profile">
-    <h2>プロフィール情報</h2>
+    <h5>【プロフィール情報】</h5>
     <p><strong>メールアドレス:</strong> <%= @user.email %></p>
     <p><strong>登録日:</strong> <%= @user.created_at.strftime('%Y/%m/%d') %></p>
     <!-- 必要な項目を追加 -->
   </div>
 
   <div class="posts">
-    <h2>投稿一覧</h2>
+    <h5>【投稿一覧】</h5>
     <% if @diaries.any? %>
       <% @diaries.each do |diary| %>
         <div class="post">
