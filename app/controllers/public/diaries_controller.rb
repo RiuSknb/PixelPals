@@ -8,8 +8,8 @@ class Public::DiariesController < ApplicationController
     @post = Post.new
   end
 
-  def diaries
-    @posts = Post.where(is_deleted: false, post_type: 'diary').includes(:user, :game, :genre).order(created_at: :desc)
+  def index
+    @diaries = Diary.where(is_deleted: false, post_type: 'diary').includes(:user, :game, :genre).order(created_at: :desc)
   end
 
   def events
