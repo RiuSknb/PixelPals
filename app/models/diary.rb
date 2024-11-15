@@ -13,10 +13,10 @@ class Diary < ApplicationRecord
   validates :title, presence: true, unless: :is_deleted, length: { maximum: 100 }
   validates :body, presence: true, unless: :is_deleted, length: { maximum: 1000 }
   validates :deleted_by, inclusion: { in: %w(user admin), allow_blank: true } # 削除者は 'user' または 'admin' のみ許容
-  with_options if: -> { post_type == 'event' } do |post|
-    post.validates :place, presence: true
-    post.validates :date, presence: true
-  end
+  # with_options if: -> { post_type == 'event' } do |post|
+  #   post.validates :place, presence: true
+  #   post.validates :date, presence: true
+  # end
 
   # スコープ設定
   scope :active, -> { where(is_deleted: false) } # 論理削除されていない投稿のみを取得

@@ -1,5 +1,27 @@
 Rails.application.routes.draw do
   namespace :public do
+    get 'likes/create'
+    get 'likes/destroy'
+  end
+  namespace :admin do
+    get 'likes/destroy'
+  end
+  namespace :admin do
+    get 'groups_members/index'
+    get 'groups_members/show'
+    get 'groups_members/create'
+    get 'groups_members/update'
+    get 'groups_members/destroy'
+  end
+  namespace :public do
+    get 'groups_members/new'
+    get 'groups_members/index'
+    get 'groups_members/show'
+    get 'groups_members/create'
+    get 'groups_members/update'
+    get 'groups_members/destroy'
+  end
+  namespace :public do
     get 'groups/new'
     get 'groups/index'
     get 'groups/show'
