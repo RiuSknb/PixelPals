@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
   namespace :public do
+    get 'comments/create'
+    get 'comments/edit'
+    get 'comments/update'
+    get 'comments/destroy'
+  end
+  namespace :admin do
+    get 'comments/index'
+    get 'comments/show'
+    get 'comments/destroy'
+  end
+  namespace :public do
     get 'games/index'
     get 'games/show'
   end
