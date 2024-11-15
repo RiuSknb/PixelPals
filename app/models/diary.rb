@@ -28,7 +28,7 @@ class Diary < ApplicationRecord
   end
 
   enum deleted_by: { user: 0, admin: 1 }
-=======
+
 class Public::PostsController < ApplicationController
   before_action :authenticate_user!  # ログイン必須
 
