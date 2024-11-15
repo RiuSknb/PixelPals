@@ -28,6 +28,7 @@ class Diary < ApplicationRecord
   end
 
   enum deleted_by: { user: 0, admin: 1 }
+end
 
 class Public::PostsController < ApplicationController
   before_action :authenticate_user!  # ログイン必須
@@ -107,6 +108,6 @@ class Public::PostsController < ApplicationController
   
   # `post_params` で、date や他のフィールドを許可
   def diary_params
-    params.require(:piary).permit(:title, :body, :date, :place, :user_id, :game_id, :post_type, :genre_id, :group_id)
+    params.require(:diary).permit(:title, :body, :date, :place, :user_id, :game_id, :post_type, :genre_id, :group_id)
   end
 end

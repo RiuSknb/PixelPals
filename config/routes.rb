@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'users/mypage'
+    get 'users/new'
+    get 'users/index'
+    get 'users/show'
+    get 'users/create'
+    get 'users/edit'
+    get 'users/update'
+    get 'users/destroy'
+  end
   devise_for :users, skip: [:passwords], controllers: {
     registrations: 'public/registrations',
     sessions: 'public/sessions'
