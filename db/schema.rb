@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_15_080746) do
+ActiveRecord::Schema.define(version: 2024_11_15_081827) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -89,16 +89,35 @@ ActiveRecord::Schema.define(version: 2024_11_15_080746) do
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id", null: false
+    t.integer "genre_id"
+    t.integer "game_id"
+    t.integer "group_id"
+    t.string "title"
+    t.text "body"
+    t.string "place"
+    t.datetime "date"
+    t.string "post_type"
+    t.boolean "is_deleted", default: false
+    t.integer "deleted_by", default: 0
+    t.index ["game_id"], name: "index_events_on_game_id"
+    t.index ["genre_id"], name: "index_events_on_genre_id"
+    t.index ["group_id"], name: "index_events_on_group_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "genre_id", null: false
+    t.string "name", null: false
+    t.index ["genre_id"], name: "index_games_on_genre_id"
   end
 
   create_table "genres", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name", null: false
   end
 
   create_table "group_members", force: :cascade do |t|
