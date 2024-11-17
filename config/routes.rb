@@ -23,6 +23,9 @@ Rails.application.routes.draw do
       collection do
         get 'mypage', to: 'users#mypage', as: 'mypage' # マイページ用のカスタムルート
       end
+      member do
+        put :deactivate
+      end
     end
 
     # Diariesコントローラ
