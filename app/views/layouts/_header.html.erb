@@ -1,14 +1,18 @@
-<div style="background-color: #f0f8ff; padding: 10px;">
+<div class="header">
   <% if user_signed_in? %>
-    <p><%= current_user.name %>さん、こんにちは！</p>
-    <%= link_to 'Top', root_path %> |
-    <%= link_to 'Diary', diaries_path %> |
-    <%= link_to 'Mypage', mypage_users_path %> |
-    <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+    <p class="greeting"><%= current_user.name %>さん、こんにちは！</p>
+    <div class="nav-links">
+      <%= link_to 'Top', root_path %> |
+      <%= link_to 'Diary', diaries_path %> |
+      <%= link_to 'Mypage', mypage_users_path %> |
+      <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+    </div>
   <% else %> 
-    <%= link_to 'Top', root_path %> |
-    <%= link_to 'Diary', diaries_path %> |
-    <%= link_to 'Log in', new_user_session_path %> |
-    <%= link_to 'Sign in', new_user_registration_path %>
+    <div class="nav-links">
+      <%= link_to 'Top', root_path %> |
+      <%= link_to 'Diary', diaries_path %> |
+      <%= link_to 'Log in', new_user_session_path %> |
+      <%= link_to 'Sign up', new_user_registration_path %>
+    </div>
   <% end %>
 </div>

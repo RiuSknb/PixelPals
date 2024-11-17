@@ -1,24 +1,37 @@
-<div class="mypage">
-  <h1><%= @user.name %>さんのマイページ</h1>
-
+<div class='container'>
+  <h1 class="mypage-title"><%= @user.name %> さんのマイページ</h1>
   <div class="profile">
-    <h2>プロフィール情報</h2>
+    <h3>プロフィール情報</h3>
     <p><strong>メールアドレス:</strong> <%= @user.email %></p>
     <p><strong>登録日:</strong> <%= @user.created_at.strftime('%Y/%m/%d') %></p>
-    <!-- 必要な項目を追加 -->
   </div>
+</div>
 
-  <div class="posts">
-    <h2>投稿一覧</h2>
-    <% if @diaries.any? %>
-      <% @diaries.each do |diary| %>
-        <div class="post">
-          <h3><%= link_to diary.title, diary_path(diary) %></h3>
-          <p><%= truncate(diary.body, length: 100) %></p>
-        </div>
+<div class='container'>
+  <table class="diary-table">
+    <thead>
+      <tr>
+        <th>投稿タイトル</th>
+        <th>投稿日</th>
+        <th>いいね他</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @diaries.any? %>
+        <% @diaries.each do |diary| %>
+          <tr>
+            <td class="align-middle col-md-3">
+              <%= link_to diary.title, diary_path(diary), class: "diary-link" %>
+            </td>
+            <td><%= diary.created_at.strftime('%Y-%m-%d') %></td>
+            <td>♥</td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="no-posts">まだ投稿はありません</td>
+        </tr>
       <% end %>
-    <% else %>
-      <p>まだ投稿はありません</p>
-    <% end %>
-  </div>
+    </tbody>
+  </table>
 </div>
