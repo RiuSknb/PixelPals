@@ -1,12 +1,20 @@
 <div class='container'>
+<<<<<<< HEAD
   <h1 class="mypage-title"><%= @user.name %> さんのマイページ</h1>
   <div class="profile">
     <h3>プロフィール情報</h3>
+=======
+  <h3><%= @user.name %>&nbsp;さんのマイページ</h3>
+
+  <div class="profile">
+    <h5>【プロフィール情報】</h5>
+>>>>>>> main
     <p><strong>メールアドレス:</strong> <%= @user.email %></p>
     <p><strong>登録日:</strong> <%= @user.created_at.strftime('%Y/%m/%d') %></p>
   </div>
 </div>
 
+<<<<<<< HEAD
 <div class='container'>
   <table class="diary-table">
     <thead>
@@ -31,6 +39,16 @@
         <tr>
           <td colspan="3" class="no-posts">まだ投稿はありません</td>
         </tr>
+=======
+  <div class="posts">
+    <h5>【投稿一覧】</h5>
+    <% if @diaries.any? %>
+      <% @diaries.each do |diary| %>
+        <div class="post">
+          <h3><%= link_to diary.title, diary_path(diary) %></h3>
+          <p><%= truncate(diary.body, length: 100) %></p>
+        </div>
+>>>>>>> main
       <% end %>
     </tbody>
   </table>
