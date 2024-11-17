@@ -1,1 +1,33 @@
-<p>public/diaries/index</p>
+<p>みんなが投稿した日記の一覧です（public/diaries/index）</p>
+<div class='container'>
+  <%= link_to "ゲームを選んで投稿する！", games_path, class: "btn btn-primary" %>
+  <h1>日記一覧</h1>
+  <% if @diaries.any? %>
+    <table class="diary-table">
+      <tr>
+        <th>is_deleted</th>
+        <th>投稿者</th>
+        <th>ゲーム</th>
+        <th>ジャンル</th>
+        <th>タイトル</th>
+        <th>編集</th>
+        <th>削除</th>
+      </tr>
+      <% @diaries.each do |diary| %>
+        <tr>
+          <td><%= diary.is_deleted %></td>
+          <td><%= diary.user.name %></td>
+          <td><%= diary.game.name %></td>
+          <td><%= diary.genre.name %></td>
+          <td><%= link_to diary.title, diary_path(diary) %></td>
+          <% if diary.user == current_user && !diary.is_deleted %>
+            <td><%= link_to '編集', edit_diary_path(diary) %>
+            <td><%= link_to '削除', diary_path(diary), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>まだ投稿はありません</p>
+  <% end %>
+</div>
