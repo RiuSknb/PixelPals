@@ -1,5 +1,6 @@
 class Public::DiariesController < ApplicationController
   before_action :authenticate_user!  # ログイン必須
+  before_action :ensure_correct_user, only: [:edit, :update]
 
 
   def new
@@ -66,5 +67,13 @@ class Public::DiariesController < ApplicationController
   # `post_params` で、date や他のフィールドを許可
   def diary_params
     params.require(:diary).permit(:title, :body, :user_id, :game_id, :genre_id, :group_id)
+  end
+
+  # 編集しようとする投稿の所有者がログインユーザーか確認
+  def ensure_correct_user
+    @diary = Diary.find(params[:id])
+    if @diary.user != current_user
+      redirect_to diaries_path
+    end
   end
 end
