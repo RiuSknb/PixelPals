@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_correct_user, only: [:edit, :update]
   # ログイン必須
 
   def mypage
@@ -31,7 +32,18 @@ class Public::UsersController < ApplicationController
     current_user.destroy
     sign_out current_user
     reset_session
-    
+
     redirect_to root_path, notice: '退会処理が完了しました。'
   end
+
+  private
+
+  # 編集しようとするユーザーがログイン中のユーザーか確認
+  def ensure_correct_user
+    # 自分以外のIDでアクセスしている場合、マイページにリダイレクト
+    if current_user.id != params[:id].to_i
+      redirect_to mypage_users_path(current_user)
+    end
+  end
 end
+
