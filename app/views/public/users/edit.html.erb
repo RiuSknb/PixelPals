@@ -1,2 +1,30 @@
-<h1>Public::Users#edit</h1>
-<p>Find me in app/views/public/users/edit.html.erb</p>
+<h1>投稿の編集</h1>
+
+<div class='container'>
+  <%= form_with(model: @user, local: true) do |form| %>
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @diary.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :name, '名前' %>
+      <%= form.text_field :title, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :email, 'メールアドレス' %>
+      <%= form.text_field :body, class: 'form-control', rows: 5 %>
+    </div>
+
+    <%= form.submit '更新', class: 'btn btn-primary' %>
+  <% end %>
+  <%= button_to '退会する', deactivate_user_path, method: :put, data: { confirm: '本当に退会しますか？退会後は元に戻すことができませんので、よくご確認の上、進んでください。' }, class: 'btn btn-danger' %>
+
+  <%= link_to 'マイページへ戻る', mypage_users_path(@user), class: 'btn btn-secondary' %>
+</div>

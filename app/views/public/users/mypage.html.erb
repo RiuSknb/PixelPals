@@ -4,6 +4,7 @@
     <h3>プロフィール情報</h3>
     <p><strong>メールアドレス:</strong> <%= @user.email %></p>
     <p><strong>登録日:</strong> <%= @user.created_at.strftime('%Y/%m/%d') %></p>
+    <%= link_to '編集', edit_user_path(@user), class: 'btn btn-secondary' %>
   </div>
 </div>
 

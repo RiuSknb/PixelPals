@@ -4,12 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :group_members
+  has_many :group_members, dependent: :destroy
   has_many :groups, through: :group_members
-  has_many :diaries
-  has_many :events
-  has_many :likes
-  has_many :comments
+  has_many :diaries, dependent: :destroy
+  has_many :events, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   
   # バリデーションを追加
