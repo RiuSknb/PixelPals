@@ -1,2 +1,31 @@
-<h1>Public::Events#new</h1>
-<p>Find me in app/views/public/events/new.html.erb</p>
+<%= form_with model: @event, url: events_path(game_id: @game.id) do |f| %>
+  <div class="form-container">
+    <% if @event.errors.any? %>
+      <div class="error_messages">
+        <ul>
+          <% @event.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="game-info">
+      <p><strong>ゲーム名:</strong> <%= @game.name %></p>
+      <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
+    </div>
+
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :game_id, value: @game.id %>
+    <%= f.hidden_field :genre_id, value: @genre.id %>
+
+    <div class="event-form">
+      <%= f.text_field :title, placeholder: "タイトル", class: "form-input" %>
+      <%= f.text_area :body, placeholder: "内容", class: "form-input" %>
+      <%= f.text_area :place, placeholder: "開催場所", class: "form-input" %>
+      <%= f.datetime_field :date, class: "form-input" %>
+    </div>
+
+    <%= f.submit "投稿する", class: 'submit-button' %>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_17_051228) do
+ActiveRecord::Schema.define(version: 2024_11_18_063242) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -94,7 +94,6 @@ ActiveRecord::Schema.define(version: 2024_11_17_051228) do
     t.text "body"
     t.string "place"
     t.datetime "date"
-    t.string "post_type"
     t.boolean "is_deleted", default: false
     t.integer "deleted_by", default: 0
     t.index ["game_id"], name: "index_events_on_game_id"

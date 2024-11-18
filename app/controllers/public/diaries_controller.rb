@@ -23,7 +23,6 @@ class Public::DiariesController < ApplicationController
     @genre = Genre.find(@game.genre_id)
     @diary = Diary.new(diary_params)
 
-    # `post_params` で `date` を組み立てる
     if @diary.save
       redirect_to @diary, notice: '投稿が作成されました。'
     else
