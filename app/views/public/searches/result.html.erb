@@ -1,0 +1,30 @@
+<h1>検索結果</h1>
+<p>検索ワード: <%= @query %></p>
+
+<% if @results.present? %>
+  <% case @category %>
+  <% when "games" %>
+    <h2>ゲーム</h2>
+    <ul>
+      <% @results.each do |game| %>
+        <li><%= link_to game.name, game_path(game) %></li>
+      <% end %>
+    </ul>
+  <% when "posts" %>
+    <h2>投稿</h2>
+    <ul>
+      <% @results.each do |post| %>
+        <li><%= link_to post.title, post_path(post) %></li>
+      <% end %>
+    </ul>
+  <% when "users" %>
+    <h2>ユーザー</h2>
+    <ul>
+      <% @results.each do |user| %>
+        <li><%= link_to user.name, user_path(user) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+<% else %>
+  <p>検索結果が見つかりませんでした。</p>
+<% end %>

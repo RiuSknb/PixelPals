@@ -6,6 +6,16 @@
       <%= link_to 'Diary', diaries_path %> |
       <%= link_to 'Mypage', mypage_users_path %> |
       <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+      <form action="<%= search_path %>" method="get" class="d-flex">
+      <input type="text" name="query" placeholder="検索キーワードを入力" class="form-control me-2">
+      <select name="category" class="form-select me-2">
+        <option value="games">ゲーム検索</option>
+        <option value="posts">投稿検索</option>
+        <option value="users">ユーザー検索</option>
+      </select>
+      <button type="submit" class="btn btn-primary">検索</button>
+    </form>
+
     </div>
   <% else %> 
     <div class="nav-links">
