@@ -6,15 +6,21 @@
       <%= link_to 'Diary', diaries_path %> |
       <%= link_to 'Mypage', mypage_users_path %> |
       <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
-      <form action="<%= search_path %>" method="get" class="d-flex">
-      <input type="text" name="query" placeholder="検索キーワードを入力" class="form-control me-2">
-      <select name="category" class="form-select me-2">
-        <option value="games">ゲーム検索</option>
-        <option value="posts">投稿検索</option>
-        <option value="users">ユーザー検索</option>
-      </select>
-      <button type="submit" class="btn btn-primary">検索</button>
-    </form>
+      <%= form_with url: search_path, method: :get, local: true do %>
+        <div>
+          <%= label_tag :query, "検索ワード" %>
+          <%= text_field_tag :query, params[:query] %>
+        </div>
+        <div>
+          <%= label_tag :category, "検索対象" %>
+          <%= select_tag :category, options_for_select([["ゲーム", "games"], ["日記", "diaries"], ["ユーザー", "users"]], params[:category]) %>
+        </div>
+        <div>
+          <%= label_tag :match_type, "検索方法" %>
+          <%= select_tag :match_type, options_for_select([["部分一致", "partial"], ["完全一致", "exact"]], params[:match_type]) %>
+        </div>
+        <%= submit_tag "検索" %>
+      <% end %>
 
     </div>
   <% else %> 
