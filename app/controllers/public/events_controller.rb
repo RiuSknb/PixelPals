@@ -14,11 +14,10 @@ class Public::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @comment = Comment.new
+    @comments = @event.comments.where(is_deleted: false).order(created_at: :desc)
   end
 
   def edit
-    @event = Event.find(params[:id])
   end
 
   def update
@@ -33,7 +32,7 @@ class Public::EventsController < ApplicationController
   def create
     @game = Game.find(params[:game_id])
     @genre = Genre.find(@game.genre_id)
-    @event = Event.new(event_params)
+    @event = Event.find(params[:event_id])
 
     if @event.save
       redirect_to @event, notice: '投稿が作成されました。'

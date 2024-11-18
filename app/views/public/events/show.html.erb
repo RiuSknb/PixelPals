@@ -17,6 +17,7 @@
 
  <h3>コメント</h3>
   <%= form_with(model: [@event, @event.comments.build], local: true) do |f| %>
+    <%= f.hidden_field :event_id, value: @event.id %>
     <div class="form-group">
       <%= f.label :body, "コメントを追加" %>
       <%= f.text_area :body, class: "form-control", placeholder: "コメントを入力..." %>
@@ -26,14 +27,23 @@
     </div>
   <% end %>
 
-  <h4>コメント</h4>
-  <% @event.comments.each do |comment| %>
-    <div class="comment">
-      <p><strong><%= comment.user.name %></strong> (<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>)</p>
-      <p><%= comment.body %></p>
-      <% if comment.user == current_user %>
-        <%= link_to '削除', comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか?' } %>
+  <h3>コメント一覧</h3>
+
+  <% if @comments.any? %>
+    <ul class="list-group">
+      <% @comments.each do |comment| %>
+        <li class="list-group-item">
+          <strong><%= comment.user.name %></strong>:
+          <%= comment.body %>
+          <small class="text-muted">
+            (<%= l comment.created_at, format: :short %>)
+          </small>
+        </li>
       <% end %>
-    </div>
+    </ul>
+  <% else %>
+    <p>まだコメントはありません。</p>
   <% end %>
+
+
 </div>
