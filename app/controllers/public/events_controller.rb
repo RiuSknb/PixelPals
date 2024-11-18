@@ -14,6 +14,7 @@ class Public::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @comment = Comment.new
   end
 
   def edit
@@ -60,6 +61,18 @@ class Public::EventsController < ApplicationController
     end
   end
 
+  # コメント作成
+  def create_comment
+    @event = Event.find(params[:event_id])
+    @comment = @event.comments.build(comment_params)
+    @comment.user = current_user
+
+    if @comment.save
+      redirect_to @event, notice: 'コメントが投稿されました。'
+    else
+      redirect_to @event, alert: 'コメントの投稿に失敗しました。'
+    end
+  end
 
   private
   
@@ -74,5 +87,13 @@ class Public::EventsController < ApplicationController
     if @event.user != current_user
       redirect_to diaries_path
     end
+  end
+
+  def set_event
+    @event = Event.find(params[:id])
+  end
+
+  def comment_params
+    params.require(:comment).permit(:body)
   end
 end
