@@ -1,2 +1,42 @@
-<h1>Public::Events#edit</h1>
-<p>Find me in app/views/public/events/edit.html.erb</p>
+<h1>投稿の編集</h1>
+
+<div class='container'>
+  <%= form_with(model: @event, local: true) do |form| %>
+    <% if @event.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @event.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :title, 'タイトル' %>
+      <%= form.text_field :title, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :body, '内容' %>
+      <%= form.text_area :body, class: 'form-control', rows: 5 %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :place, '開催場所' %>
+      <%= form.text_field :body, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :place, '開催日時' %>
+      <%= form.datetime_field :date, class: 'form-control' %>
+    </div>
+
+
+
+    <%= form.submit '更新', class: 'btn btn-primary' %>
+  <% end %>
+
+  <%= link_to '詳細に戻る', event_path(@event), class: 'btn btn-secondary' %>
+  <%= link_to 'イベント一覧に戻る', events_path, class: 'btn btn-secondary' %>
+</div>

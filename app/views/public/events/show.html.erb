@@ -1,2 +1,17 @@
-<h1>Public::Events#show</h1>
-<p>Find me in app/views/public/events/show.html.erb</p>
+<div class='container'>
+  <h1 class="event-title"><%= @event.title %></h1>
+
+  <% if @event.user == current_user %>
+    <div class="edit-link">
+      <%= link_to '編集', edit_event_path(@event), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <p class="event-body"><%= @event.body %></p>
+  <p class="event-body"><%= @event.place %></p>
+  <p class="event-body"><%= @event.date.strftime("%Y/%m/%d %H:%M") %></p>
+
+
+  <%= link_to '自分の投稿一覧（マイページ）へ', mypage_users_path, class: 'btn btn-secondary' %>
+  <%= link_to 'みんなのイベント一覧へ', events_path, class: "btn btn-secondary" %>
+</div>
