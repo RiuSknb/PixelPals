@@ -32,7 +32,7 @@ class Public::EventsController < ApplicationController
   def create
     @game = Game.find(params[:game_id])
     @genre = Genre.find(@game.genre_id)
-    @event = Event.find(params[:event_id])
+    @event = Event.new(event_params)
 
     if @event.save
       redirect_to @event, notice: '投稿が作成されました。'
@@ -43,17 +43,9 @@ class Public::EventsController < ApplicationController
   end
 
   def destroy
-    @event = Diary.find(params[:id])
+    @event = Event.find(params[:id])
     if @event.user == current_user
-      @event.update(genre_id: nil,
-                      game_id: nil,
-                      group_id: nil,
-                      title: "",
-                      body: "",
-                      place: "",
-                      date: "",
-                      is_deleted: true,
-                      deleted_by: 0)
+      @event.destroy # データベースから削除
       redirect_to events_path, notice: '投稿が削除されました。'
     else
       redirect_to root_path, alert: '削除権限がありません。'
