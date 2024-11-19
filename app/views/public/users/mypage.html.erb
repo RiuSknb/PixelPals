@@ -35,4 +35,30 @@
       <% end %>
     </tbody>
   </table>
+  <table class="event-table">
+    <thead>
+      <tr>
+        <th>投稿タイトル</th>
+        <th>投稿日</th>
+        <th>いいね他</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @events.any? %>
+        <% @events.each do |event| %>
+          <tr>
+            <td class="align-middle col-md-3">
+              <%= link_to event.title, event_path(event), class: "event-link" %>
+            </td>
+            <td><%= event.created_at.strftime('%Y/%m/%d %h:%m') %></td>
+            <td>♥</td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="no-posts">まだ投稿はありません</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

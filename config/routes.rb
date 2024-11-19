@@ -24,16 +24,16 @@ Rails.application.routes.draw do
     # Diariesコントローラ
     resources :diaries, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
       # resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Post' }
-      resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Post' }
+      resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Diary' }
       # , param: :id, defaults: { commentable_type: 'Event' }を追記
-
-
     end
 
     # Eventsコントローラ
     resources :events, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
-      resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Event' }
-      resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Post' }
+      # イベントに対してコメントを作成・削除するルートを追加
+      resources :comments, only: [:create, :edit, :update, :destroy], param: :id, defaults: { commentable_type: 'Event' }
+      # イベントに対していいねを作成・削除するルート（もしあれば）
+      resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Diary' }
     end
 
     # Genresコントローラ
