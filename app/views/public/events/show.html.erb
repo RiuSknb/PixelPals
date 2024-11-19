@@ -15,18 +15,6 @@
   <%= link_to '自分の投稿一覧（マイページ）へ', mypage_users_path, class: 'btn btn-secondary' %>
   <%= link_to 'みんなのイベント一覧へ', events_path, class: "btn btn-secondary" %>
 
- <h3>コメント</h3>
-  <%= form_with(model: [@event, @event.comments.build], local: true) do |f| %>
-    <%= f.hidden_field :event_id, value: @event.id %>
-    <div class="form-group">
-      <%= f.label :body, "コメントを追加" %>
-      <%= f.text_area :body, class: "form-control", placeholder: "コメントを入力..." %>
-    </div>
-    <div class="form-group">
-      <%= f.submit "コメントを投稿", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-
   <h3>コメント一覧</h3>
 
   <% if @comments.any? %>
@@ -43,6 +31,18 @@
     </ul>
   <% else %>
     <p>まだコメントはありません。</p>
+  <% end %>
+
+  <h3>コメント</h3>
+  <%= form_with(model: [@event, @event.comments.build], local: true) do |f| %>
+    <%= f.hidden_field :event_id, value: @event.id %>
+    <div class="form-group">
+      <%= f.label :body, "コメントを追加" %>
+      <%= f.text_area :body, class: "form-control", placeholder: "コメントを入力..." %>
+    </div>
+    <div class="form-group">
+      <%= f.submit "コメントを投稿", class: "btn btn-primary" %>
+    </div>
   <% end %>
 
 

@@ -204,6 +204,48 @@ h2 {
   padding: 20px;
 }
 
+/* イベント一覧テーブル（MyPage, Event/index） */
+.event-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-table thead {
+  background-color: #94c1f1;
+  color: black;
+}
+
+.event-table th, .event-table td {
+  padding: 12px;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.event-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.event-table td .event-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.event-table td .event-link:hover {
+  text-decoration: underline;
+}
+
+.no-posts {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 20px;
+}
+
+
 /* レスポンシブデザイン */
 @media (max-width: 768px) {
   .container {
