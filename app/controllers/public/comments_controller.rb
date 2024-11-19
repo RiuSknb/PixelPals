@@ -33,6 +33,7 @@ class Public::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
+    @event = @comment.commentable  # コメントに関連付けられたイベントを取得
     if @comment.user == current_user || current_user.admin?
       @comment.update(is_deleted: true, deleted_by: current_user.name, deleted_reason: "ユーザーにより削除")
       redirect_to @comment.commentable, notice: 'コメントが削除されました。'

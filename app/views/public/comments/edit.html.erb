@@ -1,12 +1,25 @@
 <h2>コメントを編集</h2>
 
 <%= form_with(model: [@comment.commentable, @comment], local: true) do |form| %>
+  <% if @comment.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= form.label :body, "コメント" %>
     <%= form.text_area :body, class: "form-control", placeholder: "コメントを入力してください" %>
   </div>
-    <!-- ポリモーフィックのため、event_idをhiddenフィールドとして追加 -->
-  <%= form.hidden_field :event_id, value: @comment.commentable.id %>
+
+  <!-- ポリモーフィック関連のため、commentable_id と commentable_type を送信 -->
+  <%= form.hidden_field :commentable_id, value: @comment.commentable.id %>
+  <%= form.hidden_field :commentable_type, value: @comment.commentable.class.name %>
+
   <div class="form-group">
     <%= form.submit "更新する", class: "btn btn-primary" %>
   </div>

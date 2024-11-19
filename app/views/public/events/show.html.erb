@@ -28,6 +28,7 @@
           </small>
           <% if comment.user == current_user %> <!-- 自分のコメントのみ編集可能 -->
             <%= link_to "編集", edit_event_comment_path(comment.commentable_id, comment), class: "btn btn-sm btn-secondary" %>
+          <%= button_to '削除する', event_comment_path(comment.commentable_id, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
           <% end %>
           <p>Comment ID: <%= comment.id %></p>
 
