@@ -1,2 +1,44 @@
-<h1>Admin::Events#show</h1>
-<p>Find me in app/views/admin/events/show.html.erb</p>
+<h1>投稿詳細（管理者用）</h1>
+<div class='container'>
+  <h1 class="event-title"><%= @event.title %></h1>
+    <div class="edit-link">
+      <%= link_to '編集', edit_admin_event_path(@event), class: "btn btn-primary" %>
+    </div>
+
+  <p class="event-body"><%= @event.body %></p>
+  <p class="event-body"><%= @event.place %></p>
+  <p class="event-body"><%= @event.date.strftime("%Y/%m/%d %H:%M") %></p>
+
+  <%= link_to '全イベント一覧へ', admin_events_path, class: "btn btn-secondary" %>
+
+  <h3>コメント一覧</h3>
+
+  <% if @comments.any? %>
+    <ul class="list-group">
+      <% @comments.each do |comment| %>
+        <li class="list-group-item">
+          <strong><%= comment.user.name %></strong>:
+          <%= comment.body %>
+          <p>Comment ID: <%= comment.id %></p>
+          <small class="text-muted">
+            (<%= l comment.created_at, format: :short %>)
+          </small>
+          <!-- 削除ボタン -->
+          <%= button_to '削除する', '#', class: 'btn btn-danger delete-btn', data: { comment_id: comment.id } %>
+          <!-- 削除理由フォーム（初期は非表示） -->
+          <div id="delete-reason-form-<%= comment.id %>" class="delete-reason-form" style="display: none;">
+            <%= form_with url: event_comment_path(comment.commentable_id, comment), method: :patch, local: true do |form| %>
+              <%= form.label :reason, "削除理由" %>
+              <%= form.text_area :reason, rows: 4 %>
+              <%= form.submit "削除", class: "btn btn-danger" %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>まだコメントはありません。</p>
+  <% end %>
+</div>
+
+<%= javascript_pack_tag 'admin_comments' %>

@@ -1,2 +1,17 @@
-<h1>Admin::Homes#top</h1>
-<p>Find me in app/views/admin/homes/top.html.erb</p>
+<div class="container my-4">
+  <% if admin_signed_in? %>  <!-- 管理者がログインしている場合 -->
+    <div class="p-4 bg-light rounded shadow-sm text-center">
+      <p class="text-muted">管理者用ダッシュボードです</p>
+
+      <li><%= link_to '日記一覧', admin_diaries_path %></li>
+      <li><%= link_to 'イベント一覧', admin_events_path %></li>
+      <li><%= link_to 'ゲーム一覧', admin_games_path %></li>
+      <li><%= link_to 'ジャンル一覧', admin_genres_path %></li>
+    </div>
+  <% else %>  <!-- 管理者がログインしていない場合 -->
+    <div class="p-4 bg-light rounded shadow-sm text-center">
+      <p class="text-muted">PixelPals管理者用ページです<br>ログインは以下から！</p>
+      <%= link_to 'Admin Log in', new_admin_session_path %>
+    </div>
+  <% end %>
+</div>

@@ -53,37 +53,44 @@ Rails.application.routes.draw do
 
   # --------------------------------------------------
 
-  # 管理者側
+  # 管理者用
+  devise_for :admins, skip: [:registrations, :passwords], controllers: {
+    sessions: 'admin/sessions'  # 管理者用ログイン処理を指定
+  }
+
   namespace :admin do
     root to: "homes#top"
-    # Usersコントローラ
-    resources :users, only: [:index, :show, :edit, :update] do
-      member do
-        patch :deactivate  # ユーザーを非アクティブにするアクション
-        patch :activate    # ユーザーをアクティブにするアクション
+    authenticate :admin do
+  
+      # Usersコントローラ
+      resources :users, only: [:index, :show, :edit, :update] do
+        member do
+          patch :deactivate  # ユーザーを非アクティブにするアクション
+          patch :activate    # ユーザーをアクティブにするアクション
+        end
       end
+
+      # dairesコントローラ
+      resources :diaries, only: [:index, :show, :edit, :update, :destroy] do
+        resources :comments, only: [:edit, :destroy], param: :id, defaults: { commentable_type: 'Post' }
+      end
+
+      # Eventsコントローラ
+      resources :events, only: [:index, :show, :edit, :update, :destroy] do
+        resources :comments, only: [:edit, :destroy], param: :id, defaults: { commentable_type: 'Event' }
+      end
+
+      # Genresコントローラ
+      resources :genres, only: [:index, :show, :edit, :update, :destroy]
+
+      # Gamesコントローラ
+      resources :games, only: [:index, :show, :edit, :update, :destroy]
+
+      # Groupsコントローラ
+      resources :groups, only: [:index, :show, :edit, :update, :destroy]
+
+      # Group_membersコントローラ
+      resources :group_members, only: [:index, :show, :edit, :update, :destroy]
     end
-
-    # Postsコントローラ
-    resources :diaries, only: [:index, :show, :edit, :update, :destroy] do
-      resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Post' }
-    end
-
-    # Eventsコントローラ
-    resources :events, only: [:index, :show, :edit, :update, :destroy] do
-      resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Event' }
-    end
-
-    # Genresコントローラ
-    resources :genres, only: [:index, :show, :edit, :update, :destroy]
-
-    # Gamesコントローラ
-    resources :games, only: [:index, :show, :edit, :update, :destroy]
-
-    # Groupsコントローラ
-    resources :groups, only: [:index, :show, :edit, :update, :destroy]
-
-    # Group_membersコントローラ
-    resources :group_members, only: [:index, :show, :edit, :update, :destroy]
   end
 end
