@@ -5,7 +5,7 @@ class Admin::EventsController < Admin::BaseController
 
   def show
     @event = Event.find(params[:id])
-    @comments = @event.comments.where(is_deleted: false).order(created_at: :desc)
+    @comments = @event.comments
   end
 
   def edit
@@ -22,6 +22,18 @@ class Admin::EventsController < Admin::BaseController
   end
 
   def destroy
+    @comment = Comment.find(params[:id])
+
+    # 削除理由が送信されている場合のみ処理を実行
+    if params[:reason].present?
+      if @event.update(is_deleted: true, deleted_reason: params[:reason])
+        redirect_to admin_event_path(@comment.commentable), notice: 'コメントが削除されました。'
+      else
+        redirect_to admin_event_path(@comment.commentable), alert: 'コメントの削除に失敗しました。'
+      end
+    else
+      redirect_to admin_event_path(@comment.commentable), alert: '削除理由を入力してください。'
+    end
   end
 
   private

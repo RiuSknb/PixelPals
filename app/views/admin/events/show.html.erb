@@ -20,19 +20,27 @@
           <strong><%= comment.user.name %></strong>:
           <%= comment.body %>
           <p>Comment ID: <%= comment.id %></p>
+          <p>is_deleted: <%= comment.is_deleted %></p>
           <small class="text-muted">
             (<%= l comment.created_at, format: :short %>)
           </small>
-          <!-- 削除ボタン -->
-          <%= button_to '削除する', '#', class: 'btn btn-danger delete-btn', data: { comment_id: comment.id } %>
-          <!-- 削除理由フォーム（初期は非表示） -->
-          <div id="delete-reason-form-<%= comment.id %>" class="delete-reason-form" style="display: none;">
-            <%= form_with url: event_comment_path(comment.commentable_id, comment), method: :patch, local: true do |form| %>
-              <%= form.label :reason, "削除理由" %>
-              <%= form.text_area :reason, rows: 4 %>
-              <%= form.submit "削除", class: "btn btn-danger" %>
-            <% end %>
-          </div>
+
+          <% if comment.is_deleted? %>
+          <!-- 削除されたコメントの場合 -->
+            <p>削除理由: <%= comment.deleted_reason %></p>
+
+          <% else %>
+            <!-- 削除されていないコメントの場合 -->
+            <%= button_to '削除する', '#', class: 'btn btn-danger delete-btn', data: { comment_id: comment.id } %>
+            <!-- 削除理由フォーム（初期は非表示） -->
+            <div id="delete-reason-form-<%= comment.id %>" class="delete-reason-form" style="display: none;">
+              <%= form_with url: admin_event_comment_path(comment.commentable_id, comment), method: :delete, local: true do |form| %>
+                <%= form.label :reason, "削除理由" %>
+                <%= form.text_area :reason, rows: 4 %>
+                <%= form.submit "削除", class: "btn btn-danger" %>
+              <% end %>
+            </div>
+          <% end %>
         </li>
       <% end %>
     </ul>

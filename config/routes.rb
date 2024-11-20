@@ -77,7 +77,7 @@ Rails.application.routes.draw do
 
       # Eventsコントローラ
       resources :events, only: [:index, :show, :edit, :update, :destroy] do
-        resources :comments, only: [:edit, :destroy], param: :id, defaults: { commentable_type: 'Event' }
+        resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Event' }
       end
 
       # Genresコントローラ
