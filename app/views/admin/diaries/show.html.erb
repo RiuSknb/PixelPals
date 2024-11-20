@@ -1,2 +1,16 @@
-<h1>Admin::Diaries#show</h1>
-<p>Find me in app/views/admin/Diaries/show.html.erb</p>
+<h1>投稿詳細（管理者用）</h1>
+<div class='container'>
+  <h1 class="diary-title"><%= @diary.title %></h1>
+
+  <% if @diary.is_deleted? %>
+    <p class="deleted-reason">削除理由: <%= @diary.deleted_reason %></p>
+  <% else %>
+    <div class="edit-link">
+      <%= link_to '編集', edit_admin_diary_path(@diary), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <p class="diary-body"><%= @diary.body %></p>
+
+  <%= link_to '全イベント一覧へ', admin_diaries_path, class: "btn btn-secondary" %>
+</div>

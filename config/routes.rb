@@ -71,9 +71,8 @@ Rails.application.routes.draw do
       end
 
       # dairesコントローラ
-      resources :diaries, only: [:index, :show, :edit, :update, :destroy] do
-        resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Diary' }
-      end
+      resources :diaries, only: [:index, :show, :edit, :update, :destroy]
+        # resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Diary' }
 
       # Eventsコントローラ
       resources :events, only: [:index, :show, :edit, :update, :destroy] do

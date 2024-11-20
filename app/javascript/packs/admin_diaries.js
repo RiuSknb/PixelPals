@@ -1,10 +1,10 @@
-document.addDiaryListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
   // すべての削除ボタンにクリックイベントを追加
   const deleteButtons = document.querySelectorAll('.delete-btn');
   
   deleteButtons.forEach(button => {
-    button.addDiaryListener('click', function(diary) {
-      diary.preventDefault();
+    button.addEventListener('click', function(event) {
+      event.preventDefault();  // イベントのデフォルト動作を防ぐ
       
       // 対応する削除理由フォームを取得
       const diaryId = this.dataset.diaryId;
