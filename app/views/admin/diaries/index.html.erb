@@ -11,7 +11,6 @@
         <th>タイトル</th>
         <th>編集</th>
         <th>削除</th>
-        <th>削除理由</th>
       </tr>
       <% @diaries.each do |diary| %>
         <tr>
@@ -20,9 +19,21 @@
           <td><%= diary.game.name %></td>
           <td><%= diary.genre.name %></td>
           <td><%= link_to diary.title, diary_path(diary) %></td>
-          <td><%= link_to '編集', edit_diary_path(diary) %>
-          <td><%= link_to '削除', diary_path(diary), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %></td>
-          <td><%= diary.deleted_reason %></td>
+          <% if diary.is_deleted? %>
+            <td><p>削除理由: <%= diary.deleted_reason %></p></td>
+          <% else %>
+            <td><%= link_to '編集', edit_admin_diary_path(diary) %></td>
+            <td><%= button_to '削除', '#', class: 'btn btn-danger delete-btn', data: { diary_id: diary.id } %></td>
+            <td>
+              <div id="delete-reason-form-<%= diary.id %>" class="delete-reason-form" style="display: none;">
+                <%= form_with url: admin_diary_path(diary.id, diary), method: :delete, local: true do |form| %>
+                  <%= form.label :reason, "削除理由" %>
+                  <%= form.text_area :reason, rows: 4 %>
+                  <%= form.submit "削除", class: "btn btn-danger" %>
+                <% end %>
+              </div>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </table>
@@ -30,3 +41,5 @@
     <p>まだ投稿はありません</p>
   <% end %>
 </div>
+
+<%= javascript_pack_tag 'admin_diaries' %>

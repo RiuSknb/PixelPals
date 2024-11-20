@@ -18,6 +18,8 @@ import "bootstrap";
 import "../stylesheets/application"; 
 
 import "admin_comments";
+import "admin_events";
+import "admin_diaries";
 
 Rails.start()
 Turbolinks.start()
