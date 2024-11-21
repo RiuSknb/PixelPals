@@ -14,3 +14,13 @@ games = Game.create([
   { genre_id: genres[2].id, name: 'sports1' },
   { genre_id: genres[2].id, name: 'sports2' }
 ])
+
+# 管理者アカウントを作成
+admin = Admin.new(
+  email: 'admin@example.com',
+  password: 'password123',
+  password_confirmation: 'password123'
+)
+
+# 管理者アカウントを保存
+admin.save!

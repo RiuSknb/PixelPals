@@ -1,2 +1,55 @@
-<h1>Public::Events#show</h1>
-<p>Find me in app/views/public/events/show.html.erb</p>
+<div class='container'>
+  <h1 class="event-title"><%= @event.title %></h1>
+
+  <% if @event.user == current_user %>
+    <div class="edit-link">
+      <%= link_to '編集', edit_event_path(@event), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <p class="event-body"><%= @event.body %></p>
+  <p class="event-body"><%= @event.place %></p>
+  <p class="event-body"><%= @event.date.strftime("%Y/%m/%d %H:%M") %></p>
+
+
+  <%= link_to '自分の投稿一覧（マイページ）へ', mypage_users_path, class: 'btn btn-secondary' %>
+  <%= link_to 'みんなのイベント一覧へ', events_path, class: "btn btn-secondary" %>
+
+  <h3>コメント一覧</h3>
+
+  <% if @comments.any? %>
+    <ul class="list-group">
+      <% @comments.each do |comment| %>
+        <li class="list-group-item">
+          <strong><%= comment.user.name %></strong>:
+          <%= comment.body %>
+          <small class="text-muted">
+            (<%= l comment.created_at, format: :short %>)
+          </small>
+          <% if comment.user == current_user %> <!-- 自分のコメントのみ編集可能 -->
+            <%= link_to "編集", edit_event_comment_path(comment.commentable_id, comment), class: "btn btn-sm btn-secondary" %>
+          <%= button_to '削除する', event_comment_path(comment.commentable_id, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+          <% end %>
+          <p>Comment ID: <%= comment.id %></p>
+
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>まだコメントはありません。</p>
+  <% end %>
+
+  <h3>コメント</h3>
+  <%= form_with(model: [@event, @event.comments.build], local: true) do |f| %>
+    <%= f.hidden_field :event_id, value: @event.id %>
+    <div class="form-group">
+      <%= f.label :body, "コメントを追加" %>
+      <%= f.text_area :body, class: "form-control", placeholder: "コメントを入力..." %>
+    </div>
+    <div class="form-group">
+      <%= f.submit "コメントを投稿", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+
+</div>

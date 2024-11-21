@@ -1,2 +1,16 @@
-<h1>Admin::Games#show</h1>
-<p>Find me in app/views/admin/games/show.html.erb</p>
+<div class='container'>
+  <h1>ゲーム詳細</h1>
+
+  <p>
+    <strong>ジャンル:</strong>
+    <%= @game.name %>
+  </p>
+  <p>
+    <strong>ジャンル:</strong>
+    <%= @game.genre.name %>
+  </p>
+  <%= link_to 'ゲーム一覧', admin_games_path %> ||
+  <%= link_to '編集', edit_admin_game_path(@game) %>
+  <%= link_to '削除', admin_game_path(@game), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+
+</div>

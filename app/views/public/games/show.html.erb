@@ -1,6 +1,7 @@
 <div class='container'>
   <h1><%= @game.name %></h1>
-  <p>このゲームについて投稿する！(public/games/show)</p>
-  <%=link_to '投稿', new_diary_path(game_id: @game.id) %><br>
+  <p>このゲームについて...(public/games/show)</p>
+  <%=link_to '日記を投稿！', new_diary_path(game_id: @game.id) %><br>
+  <%=link_to 'イベントを開催！', new_event_path(game_id: @game.id) %>
 </div>
 <%= link_to 'ゲーム一覧へ戻る', games_path %> <!-- ゲーム一覧に戻るリンク -->

@@ -23,7 +23,6 @@ class Public::DiariesController < ApplicationController
     @genre = Genre.find(@game.genre_id)
     @diary = Diary.new(diary_params)
 
-    # `post_params` で `date` を組み立てる
     if @diary.save
       redirect_to @diary, notice: '投稿が作成されました。'
     else
@@ -48,13 +47,7 @@ class Public::DiariesController < ApplicationController
   def destroy
     @diary = Diary.find(params[:id])
     if @diary.user == current_user
-      @diary.update(genre_id: nil,
-                      game_id: nil,
-                      group_id: nil,
-                      title: "",
-                      body: "",
-                      is_deleted: true,
-                      deleted_by: 0)
+      @diary.destroy # データベースから削除
       redirect_to diaries_path, notice: '投稿が削除されました。'
     else
       redirect_to root_path, alert: '削除権限がありません。'
