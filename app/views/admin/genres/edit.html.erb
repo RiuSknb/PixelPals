@@ -1,6 +1,5 @@
-<h1>ジャンルの編集</h1>
-
 <div class='container'>
+  <h1>ジャンルの編集</h1>
   <%= form_with(model: @genre, url: admin_genre_path(@genre), local: true) do |form| %>
     <% if @genre.errors.any? %>
       <div class="alert alert-danger">
