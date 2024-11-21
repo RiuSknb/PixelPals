@@ -20,6 +20,7 @@ import "../stylesheets/application";
 import "admin_comments";
 import "admin_events";
 import "admin_diaries";
+import "admin_users.js";
 
 Rails.start()
 Turbolinks.start()
