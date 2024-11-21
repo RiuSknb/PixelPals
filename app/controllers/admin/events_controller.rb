@@ -27,12 +27,12 @@ class Admin::EventsController < Admin::BaseController
     # 削除理由が送信されている場合のみ処理を実行
     if params[:reason].present?
       if @event.update(is_deleted: true, deleted_reason: params[:reason])
-        redirect_to admin_events_path(@event), notice: 'コメントが削除されました。'
+        redirect_to admin_event_path(@event), notice: 'コメントが削除されました。'
       else
-        redirect_to admin_events_path(@event), alert: 'コメントの削除に失敗しました。'
+        redirect_to admin_event_path(@event), alert: 'コメントの削除に失敗しました。'
       end
     else
-      redirect_to admin_events_path(@event), alert: '削除理由を入力してください。'
+      redirect_to admin_event_path(@event), alert: '削除理由を入力してください。'
     end
   end
 

@@ -1,15 +1,33 @@
-<h1>投稿詳細（管理者用）</h1>
+<h1>イベント詳細（管理者用）</h1>
 <div class='container'>
   <h1 class="event-title"><%= @event.title %></h1>
-    <div class="edit-link">
-      <%= link_to '編集', edit_admin_event_path(@event), class: "btn btn-primary" %>
-    </div>
+    <% if @event.is_deleted? %>
+      <p class="deleted-reason">削除理由: <%= @event.deleted_reason %></p>
+    <% else %>
+      <div class="edit-link">
+        <%= link_to '編集', edit_admin_event_path(@event), class: "btn btn-primary" %>
+      </div>
+
+      <!-- 削除ボタン -->
+      <button id="delete-button" class="btn btn-danger">削除</button>
+
+      <!-- 削除理由入力フォーム（非表示） -->
+      <div id="delete-form" style="display: none; margin-top: 10px;">
+        <%= form_with url: admin_event_path(@event), method: :delete, local: true do |f| %>
+          <div class="form-group">
+            <%= f.label :reason, '削除理由' %>
+            <%= f.text_area :reason, class: 'form-control', rows: 3 %>
+          </div>
+          <%= f.submit '削除実行', class: 'btn btn-danger' %>
+        <% end %>
+      </div>
+    <% end %>
 
   <p class="event-body"><%= @event.body %></p>
   <p class="event-body"><%= @event.place %></p>
   <p class="event-body"><%= @event.date.strftime("%Y/%m/%d %H:%M") %></p>
 
-  <%= link_to '全イベント一覧へ', admin_events_path, class: "btn btn-secondary" %>
+  <%= link_to 'イベント一覧', admin_events_path, class: "btn btn-secondary" %>
 
   <h3>コメント一覧</h3>
 
@@ -50,3 +68,4 @@
 </div>
 
 <%= javascript_pack_tag 'admin_comments' %>
+<%= javascript_pack_tag 'admin_events' %>

@@ -63,10 +63,9 @@ Rails.application.routes.draw do
     authenticate :admin do
   
       # Usersコントローラ
-      resources :users, only: [:index, :show, :edit, :update] do
+      resources :users, only: [:index, :show, :edit, :update, :destroy] do
         member do
-          patch :deactivate  # ユーザーを非アクティブにするアクション
-          patch :activate    # ユーザーをアクティブにするアクション
+          patch :activate
         end
       end
 
@@ -83,7 +82,7 @@ Rails.application.routes.draw do
       resources :genres, only: [:index, :show, :edit, :update, :destroy]
 
       # Gamesコントローラ
-      resources :games, only: [:index, :show, :edit, :update, :destroy]
+      resources :games, only: [:new, :index, :show, :create, :edit, :update, :destroy]
 
       # Groupsコントローラ
       resources :groups, only: [:index, :show, :edit, :update, :destroy]

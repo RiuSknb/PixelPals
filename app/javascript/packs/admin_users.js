@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();  // イベントのデフォルト動作を防ぐ
       
       // 対応する削除理由フォームを取得
-      const diaryId = this.dataset.diaryId;
-      const deleteReasonForm = document.getElementById(`delete-reason-form-${diaryId}`);
+      const userId = this.dataset.userId;
+      const deleteReasonForm = document.getElementById(`delete-reason-form-${userId}`);
       
       // フォームの表示を切り替え
       if (deleteReasonForm.style.display === 'none' || deleteReasonForm.style.display === '') {

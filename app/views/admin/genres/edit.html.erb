@@ -1,2 +1,24 @@
-<h1>Admin::Genres#edit</h1>
-<p>Find me in app/views/admin/genres/edit.html.erb</p>
+<h1>ジャンルの編集</h1>
+
+<div class='container'>
+  <%= form_with(model: @genre, url: admin_genre_path(@genre), local: true) do |form| %>
+    <% if @genre.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @genre.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :name, 'ジャンル名' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+
+    <%= form.submit '更新', class: 'btn btn-primary' %>
+  <% end %>
+
+  <%= link_to 'ジャンル一覧に戻る', admin_genres_path, class: 'btn btn-secondary' %>
+</div>

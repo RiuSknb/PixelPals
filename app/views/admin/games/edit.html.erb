@@ -1,2 +1,31 @@
-<h1>Admin::Games#edit</h1>
-<p>Find me in app/views/admin/games/edit.html.erb</p>
+<h1>ゲームの編集</h1>
+
+<div class='container'>
+  <%= form_with(model: @game, url: admin_game_path(@game), local: true) do |form| %>
+    <% if @game.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @game.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :name, 'ゲーム名' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    
+    <div class="form-group">
+      <%= form.label :genre_id, 'ジャンル' %>
+      <%= form.select :genre_id, @genres.pluck(:name, :id), {}, class: 'form-control' %>
+      <!-- pluck(:name, :id)でジャンル名を表示し、IDを送信 -->
+    </div>
+
+    <%= form.submit '更新', class: 'btn btn-primary' %>
+  <% end %>
+
+  <%= link_to '詳細に戻る', admin_game_path(@game), class: 'btn btn-secondary' %>
+  <%= link_to 'ゲーム一覧に戻る', admin_games_path, class: 'btn btn-secondary' %>
+</div>

@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
   
   deleteButtons.forEach(button => {
     button.addEventListener('click', function(event) {
-      event.preventDefault();
+      event.preventDefault();  // イベントのデフォルト動作を防ぐ
       
       // 対応する削除理由フォームを取得
-      const eventId = this.dataset.eventId;
-      const deleteReasonForm = document.getElementById(`delete-reason-form-${eventId}`);
+      const diaryId = this.dataset.diaryId;
+      const deleteReasonForm = document.getElementById(`delete-reason-form-${diaryId}`);
       
       // フォームの表示を切り替え
       if (deleteReasonForm.style.display === 'none' || deleteReasonForm.style.display === '') {
@@ -18,4 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  // 特定の削除ボタンが固定的な場合（例: 投稿詳細ビュー）
+  const singleDeleteButton = document.getElementById("delete-button");
+  const singleDeleteForm = document.getElementById("delete-form");
+
+  if (singleDeleteButton && singleDeleteForm) {
+    singleDeleteButton.addEventListener("click", function () {
+      singleDeleteForm.style.display = singleDeleteForm.style.display === "none" ? "block" : "none";
+    });
+  }
 });
