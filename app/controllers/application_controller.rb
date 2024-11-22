@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     # if resource.admin? # 管理者の場合
       # admin_dashboard_path
     # else # 一般ユーザーの場合
-    mypage_users_path
+    mypage_users_path(id: current_user.id)
     # end
   end
 
