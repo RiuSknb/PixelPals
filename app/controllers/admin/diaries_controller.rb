@@ -37,11 +37,11 @@ class Admin::DiariesController < Admin::BaseController
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
+  def set_diary
+    @diary = Diary.find(params[:id])
   end
 
-  def user_params
-    params.require(:user).permit(:name, :email, :is_active, :status_reason)
+  def diary_params
+    params.require(:diary).permit(:title, :body, :user_id, :game_id, :genre_id, :group_id)
   end
 end
