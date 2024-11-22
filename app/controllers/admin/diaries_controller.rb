@@ -22,26 +22,26 @@ class Admin::DiariesController < Admin::BaseController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @diary = Diary.find(params[:id])
     # 削除理由が送信されている場合のみ処理を実行
     if params[:reason].present?
-      if @user.update(is_deleted: true, deleted_reason: params[:reason])
-        redirect_to admin_user_path(@user), notice: '日記が削除されました。'
+      if @diary.update(is_deleted: true, deleted_reason: params[:reason])
+        redirect_to admin_diary_path(@diary), notice: '日記が削除されました。'
       else
-        redirect_to admin_user_path(@user), alert: '日記の削除に失敗しました。'
+        redirect_to admin_diary_path(@diary), alert: '日記の削除に失敗しました。'
       end
     else
-      redirect_to admin_user_path(@user), alert: '削除理由を入力してください。'
+      redirect_to admin_diary_path(@diary), alert: '削除理由を入力してください。'
     end
   end
 
   private
 
-  def set_user
-    @user = User.find(params[:id])
+  def set_diary
+    @diary = Diary.find(params[:id])
   end
 
-  def user_params
-    params.require(:user).permit(:name, :email, :is_active, :status_reason)
+  def diary_params
+    params.require(:diary).permit(:title, :body, :user_id, :game_id, :genre_id, :group_id)
   end
 end

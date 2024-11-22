@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbolinks:load', function () {
+
   // すべての削除ボタンにクリックイベントを追加
   const deleteButtons = document.querySelectorAll('.delete-btn');
   
@@ -7,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();  // イベントのデフォルト動作を防ぐ
       
       // 対応する削除理由フォームを取得
-      const diaryId = this.dataset.diaryId;
-      const deleteReasonForm = document.getElementById(`delete-reason-form-${diaryId}`);
+      const eventId = this.dataset.eventId;
+      const deleteReasonForm = document.getElementById(`delete-reason-form-${eventId}`);
       
       // フォームの表示を切り替え
       if (deleteReasonForm.style.display === 'none' || deleteReasonForm.style.display === '') {
