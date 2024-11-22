@@ -1,5 +1,10 @@
 <div class='container'>
   <h1 class="mypage-title"><%= @user.name %> さんのマイページ</h1>
+  <% if @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image %>
+  <% else %>
+    <%= image_tag "no_image.jpg", alt: "No image" %>
+  <% end %>
   <div class="profile">
     <h3>プロフィール情報</h3>
     <p><strong>メールアドレス:</strong> <%= @user.email %></p>

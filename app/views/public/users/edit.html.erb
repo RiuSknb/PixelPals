@@ -22,6 +22,11 @@
       <%= form.text_field :email, class: 'form-control', rows: 5 %>
     </div>
 
+      <div class="form-group">
+        <%= form.label :profile_image, "プロフィール画像" %>
+        <%= form.file_field :profile_image %>
+      </div>
+
     <%= form.submit '更新', class: 'btn btn-primary' %>
   <% end %>
   <%= button_to '退会する', deactivate_user_path, method: :put, data: { confirm: '本当に退会しますか？退会後は元に戻すことができませんので、よくご確認の上、進んでください。' }, class: 'btn btn-danger' %>

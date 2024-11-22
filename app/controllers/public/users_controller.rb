@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   # ログイン必須
 
   def mypage
-    @user = current_user
+    @user = User.find(params[:id])
     @diaries = @user.diaries.where(is_deleted: false).includes(:likes, :comments).order(created_at: :desc)
     @events = @user.events.where(is_deleted: false).includes(:likes, :comments).order(created_at: :desc)
     # 例：ユーザーの投稿一覧
@@ -39,12 +39,8 @@ class Public::UsersController < ApplicationController
 
   private
 
-  # 編集しようとするユーザーがログイン中のユーザーか確認
-  def ensure_correct_user
-    # 自分以外のIDでアクセスしている場合、マイページにリダイレクト
-    if current_user.id != params[:id].to_i
-      redirect_to mypage_users_path(current_user)
-    end
+  def user_params
+    params.require(:user).permit(:name, :email, :profile_image)
   end
 end
 
