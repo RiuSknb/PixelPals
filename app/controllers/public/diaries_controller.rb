@@ -1,5 +1,5 @@
 class Public::DiariesController < ApplicationController
-  before_action :authenticate_user!  # ログイン必須
+  before_action :authenticate_user!, except: [:index, :show]  # indexとshowのみログインなしでアクセス可能
   before_action :ensure_correct_user, only: [:edit, :update]
 
 

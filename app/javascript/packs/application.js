@@ -11,10 +11,16 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+
 import "jquery";
 import "popper.js";
 import "bootstrap";
 import "../stylesheets/application"; 
+
+import "./admin_comments";
+import "./admin_events";
+import "./admin_diaries";
+import "./admin_users";
 
 Rails.start()
 Turbolinks.start()

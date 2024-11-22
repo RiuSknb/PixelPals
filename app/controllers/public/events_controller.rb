@@ -1,5 +1,5 @@
 class Public::EventsController < ApplicationController
-  before_action :authenticate_user!  # ログイン必須
+  before_action :authenticate_user!, except: [:index, :show]  # indexとshowのみログインなしでアクセス可能
   before_action :ensure_correct_user, only: [:edit, :update]
 
   def new
@@ -86,5 +86,8 @@ class Public::EventsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+  def admin_access?
+    admin_signed_in? # ここは管理者のログイン判定メソッドに置き換えてください
   end
 end

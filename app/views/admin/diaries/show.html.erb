@@ -1,2 +1,33 @@
-<h1>Admin::Diaries#show</h1>
-<p>Find me in app/views/admin/Diaries/show.html.erb</p>
+<h1>日記詳細（管理者用）</h1>
+<div class='container'>
+  <h1 class="diary-title"><%= @diary.title %></h1>
+  <h2>投稿者：<%= @diary.user.name %></h2>
+
+  <% if @diary.is_deleted? %>
+    <p class="deleted-reason">削除理由: <%= @diary.deleted_reason %></p>
+  <% else %>
+    <div class="edit-link">
+      <%= link_to '編集', edit_admin_diary_path(@diary), class: "btn btn-primary" %>
+    </div>
+
+    <!-- 削除ボタン -->
+    <button id="delete-button" class="btn btn-danger">削除</button>
+
+    <!-- 削除理由入力フォーム（非表示） -->
+    <div id="delete-form" style="display: none; margin-top: 10px;">
+      <%= form_with url: admin_diary_path(@diary), method: :delete, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :reason, '削除理由' %>
+          <%= f.text_area :reason, class: 'form-control', rows: 3 %>
+        </div>
+        <%= f.submit '削除実行', class: 'btn btn-danger' %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <p class="diary-body"><%= @diary.body %></p>
+
+  <%= link_to '日記一覧', admin_diaries_path, class: "btn btn-secondary" %>
+</div>
+
+<%= javascript_pack_tag 'admin_diaries' %>

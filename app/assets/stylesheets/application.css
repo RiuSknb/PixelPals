@@ -23,7 +23,10 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
+/* 削除フォーム隠し */
+.hidden {
+  display: none;
+}
 
 h1 {
   text-align: center;
@@ -72,12 +75,30 @@ h2 {
 }
 /* ------------------------------*/
 /* ----------|header|---------- */
-.header {
-  background-color: #f0f8ff;  /* 背景色を淡い青に設定 */
+/* ユーザーがログインしている場合のヘッダーのスタイル */
+.header.user-logged-in {
+  background-color: #f0f8ff; /* ユーザー用の背景色 */
   padding: 10px 20px;  /* 上下10px、左右20pxの余白 */
   text-align: center;  /* テキストを中央揃え */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
 }
+
+/* 管理者がログインしている場合のヘッダーのスタイル */
+.header.admin-logged-in {
+  background-color: #ff5733; /* 管理者用の背景色 */
+  padding: 10px 20px;  /* 上下10px、左右20pxの余白 */
+  text-align: center;  /* テキストを中央揃え */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
+}
+
+/* ゲスト（未ログイン）状態の場合のヘッダーのスタイル */
+.header {
+  background-color: #f0f8ff; /* ゲスト用の背景色 */
+  padding: 10px 20px;  /* 上下10px、左右20pxの余白 */
+  text-align: center;  /* テキストを中央揃え */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
+}
+
 
 .greeting {
   font-size: 1.2rem;  /* 挨拶文のフォントサイズを調整 */

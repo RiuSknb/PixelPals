@@ -1,0 +1,53 @@
+<h1>ユーザー詳細（管理者用）</h1>
+<div class='container'>
+  <div class="user-details">
+    <p><strong>アカウント状態：</strong> <%= @user.is_active %></p>
+    <p><strong>ID:</strong> <%= @user.id %></p>
+    <p><strong>名前:</strong> <%= @user.name %></p>
+    <p><strong>メールアドレス:</strong> <%= @user.email %></p>
+    <p><strong>登録日:</strong> <%= @user.created_at.strftime('%Y-%m-%d') %></p>
+    <p><strong>更新日:</strong> <%= @user.updated_at.strftime('%Y-%m-%d') %></p>
+  </div>
+
+  <div class="actions">
+    <%= link_to 'ユーザー一覧に戻る', admin_users_path, class: "btn btn-secondary" %>
+  </div>
+
+  <% if @user.is_active? %>
+    <div class="edit-link">
+      <%= link_to '編集', edit_admin_user_path(@user), class: "btn btn-primary" %>
+    </div>
+    <!-- 削除ボタン -->
+    <button id="delete-button" class="btn btn-danger">アカウント停止</button>
+    <!-- 削除理由入力フォーム（非表示） -->
+    <div id="delete-form" style="display: none; margin-top: 10px;">
+      <%= form_with url: admin_user_path(@user), method: :delete, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :reason, '停止理由' %>
+          <%= f.text_area :reason, class: 'form-control', rows: 3 %>
+        </div>
+        <%= f.submit '停止実行', class: 'btn btn-danger' %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="deleted-reason">停止理由: <%= @user.status_reason %></p>
+    <%= button_to '有効化', activate_admin_user_path(@user), method: :patch, data: { confirm: 'このアカウントを有効化しますか？' }, class: "btn btn-success btn-sm" %>
+  <% end %>
+
+  <h2>日記一覧</h2>
+  <ul>
+    <% @user.diaries.each do |diary| %>
+      <li><%= link_to diary.title, admin_diary_path(diary) %></li>
+    <% end %>
+  </ul>
+
+  <h2>イベント一覧</h2>
+  <ul>
+    <% @user.events.each do |event| %>
+      <li><%= link_to event.title, admin_event_path(event) %></li>
+    <% end %>
+  </ul>
+
+</div>
+
+<%= javascript_pack_tag 'admin_users' %>

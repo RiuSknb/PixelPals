@@ -14,6 +14,7 @@ class Public::UsersController < ApplicationController
   end
 
   def index
+    @users = User.includes(:events, :diaries).all
   end
 
   def show

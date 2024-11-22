@@ -1,2 +1,46 @@
-<h1>Admin::Diaries#index</h1>
-<p>Find me in app/views/admin/Diaries/index.html.erb</p>
+<p>ユーザーが投稿した日記一覧(管理者用)</p>
+<div class='container'>
+  <h1>日記一覧</h1>
+  <% if @diaries.any? %>
+    <table class="diary-table">
+      <tr>
+        <th>is_deleted</th>
+        <th>投稿者</th>
+        <th>ゲーム</th>
+        <th>ジャンル</th>
+        <th>タイトル</th>
+        <th>編集</th>
+        <th>削除</th>
+      </tr>
+      <% @diaries.each do |diary| %>
+        <tr>
+          <td><%= diary.is_deleted %></td>
+          <td><%= diary.user.name %></td>
+          <td><%= diary.game.name %></td>
+          <td><%= diary.genre.name %></td>
+          <td><%= link_to diary.title, admin_diary_path(diary) %></td>
+          <% if diary.is_deleted? %>
+            <td><p>削除理由: <%= diary.deleted_reason %></p></td>
+            <td><p>削除済</p></td>
+          <% else %>
+            <td><%= link_to '編集', edit_admin_diary_path(diary) %></td>
+            <td><%= button_to '削除', '#', method: :delete, class: 'btn btn-danger delete-btn', data: { diary_id: diary.id } %></td>
+            <td>
+              <div id="delete-reason-form-<%= diary.id %>" style="display: none; margin-top: 10px;">
+                <%= form_with url: admin_diary_path(diary), method: :delete, local: true do |form| %>
+                  <%= form.label :reason, "削除理由" %>
+                  <%= form.text_area :reason, rows: 4 %>
+                  <%= form.submit "削除", class: "btn btn-danger" %>
+                <% end %>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>まだ投稿はありません</p>
+  <% end %>
+</div>
+
+<%= javascript_pack_tag 'admin_diaries' %>

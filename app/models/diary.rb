@@ -1,5 +1,5 @@
 class Diary < ApplicationRecord
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :likes, as: :likeable
   # アソシエーション設定
   belongs_to :user
