@@ -45,7 +45,9 @@ Rails.application.routes.draw do
     resources :games, only: [:index, :show]
 
     # Groupsコントローラ
-    resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy]
+    resources :groups do
+      resources :group_members, only: [:create, :destroy, :update]
+    end
 
     # Group_membersコントローラ
     resources :group_members
