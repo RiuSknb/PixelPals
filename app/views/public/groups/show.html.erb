@@ -2,28 +2,42 @@
   <h1><%= @group.name %></h1>
   <p><%= @group.body %></p>
   <p>開設者: <%= @group.owner.name %></p>
+  <% @group_member = @group.group_members.find_by(user: @user) %>
 
   <% if @group.owner_id == current_user.id %>
     <%= link_to 'グループを削除', group_path(@group), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+  <% elsif @group_member.present? %>
+    <%= link_to "グループから抜ける", leave_group_group_member_path(@group, current_user.group_members.find_by(group_id: @group.id)), method: :delete, data: { confirm: "本当にグループから抜けますか？" } %>
+  <% else %>
+    <p></p>
   <% end %>
 
   <h2>メンバー一覧</h2>
+  <p><%= current_user.group_members.find_by(group_id: @group.id).role %></p>
   <ul>
     <% @group.group_members.each do |member| %>
       <% unless member.role == "開設者" %>
         <li>
-          <%= member.user.name %> - <%= member.role %> - <%= member.status %>
-          <% if member.status == "承認待ち" %>
-            <%= link_to "承認", group_group_member_path(@group, member), method: :patch %>
-          <% elsif member.status == "了承待ち"%>
-            <p></p>
-          <% else %>
+          <%= link_to member.user.name, user_path(member.user) %> - <%= member.role %> - <%= member.status %>
+          
+          <% if @group.owner_id == current_user.id %>
+            <%= form_with(model: [@group, member], method: :patch, local: true) do |f| %>
+              <%= f.select :role, GroupMember.roles.keys.reject { |role| role == "開設者" }, { selected: member.role }, class: 'form-select' %>
+              <%= f.submit "変更", class: 'btn btn-primary btn-sm' %>
+            <% end %>
+          <% end %>
+
+          <% if current_user.group_members.find_by(group_id: @group.id)&.role.in?("モデレーター") %>
+            <% if member.status == "承認待ち" %>
+              <%= link_to "承認", group_group_member_path(@group, member), method: :patch %>
+            <% end %>
             <%= link_to "削除", group_group_member_path(@group, member), method: :delete, data: { confirm: "本当に削除しますか？" } %>
           <% end %>
         </li>
       <% end %>
     <% end %>
   </ul>
+
 
   <h2>メンバーを招待</h2>
   <%= form_with url: group_group_members_path(@group), local: true do %>

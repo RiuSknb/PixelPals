@@ -11,6 +11,22 @@
     <p><strong>登録日:</strong> <%= @user.created_at.strftime('%Y/%m/%d') %></p>
     <%= link_to '編集', edit_user_path(@user), class: 'btn btn-secondary' %>
   </div>
+  <div>
+  <p>参加しているグループ</p>
+    <% @user.groups.each do |group| %>
+      <% group_member = group.group_members.find_by(user: @user) %>
+      <% if group_member.present? && group.is_public %>
+        <li>
+          <%= link_to group.name, group_path(group) %>
+          <% if group_member.status != 0%>
+            <span>(<%= group_member.role %>)</span>
+          <% else %>
+            <span>ステータス: <%= group_member.status %></span>
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
 <div class='container'>

@@ -5,6 +5,7 @@ class Public::UsersController < ApplicationController
 
   def mypage
     @user = current_user
+    @groups = @user.groups.all
     @diaries = @user.diaries.where(is_deleted: false).includes(:likes, :comments).order(created_at: :desc)
     @events = @user.events.where(is_deleted: false).includes(:likes, :comments).order(created_at: :desc)
     # 例：ユーザーの投稿一覧
@@ -18,6 +19,7 @@ class Public::UsersController < ApplicationController
   end
 
   def show
+    @user = User.includes(:diaries, :events).find(params[:id])
   end
 
   def create

@@ -47,7 +47,11 @@ Rails.application.routes.draw do
 
     # Groupsコントローラ
     resources :groups do
-      resources :group_members, only: [:create, :destroy, :update]
+      resources :group_members, only: [:create, :destroy, :update] do
+        member do
+          delete :leave
+        end
+      end
     end
 
     # # Group_membersコントローラ
