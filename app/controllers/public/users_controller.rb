@@ -38,6 +38,15 @@ class Public::UsersController < ApplicationController
     redirect_to root_path, notice: '退会処理が完了しました。'
   end
 
+  def find_by_id
+    user = User.find_by(id: params[:id])
+    if user
+      render json: { success: true, name: user.name }
+    else
+      render json: { success: false, error: "ユーザーが見つかりませんでした" }, status: 404
+    end
+  end
+
   private
 
   # 編集しようとするユーザーがログイン中のユーザーか確認

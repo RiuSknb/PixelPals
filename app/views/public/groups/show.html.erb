@@ -1,2 +1,37 @@
-<h1>Public::Groups#show</h1>
-<p>Find me in app/views/public/groups/show.html.erb</p>
+<div class='container'>
+  <h1><%= @group.name %></h1>
+  <p><%= @group.body %></p>
+  <p>開設者: <%= @group.owner.name %></p>
+
+  <% if @group.owner_id == current_user.id %>
+    <%= link_to 'グループを削除', group_path(@group), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+  <% end %>
+
+  <h2>メンバー一覧</h2>
+  <ul>
+    <% @group.group_members.each do |member| %>
+      <% unless member.role == "開設者" %>
+        <li>
+          <%= member.user.name %> - <%= member.role %> - <%= member.status %>
+          <% if member.status == "承認待ち" %>
+            <%= link_to "承認", group_group_member_path(@group, member), method: :patch %>
+          <% elsif member.status == "了承待ち"%>
+            <p></p>
+          <% else %>
+            <%= link_to "削除", group_group_member_path(@group, member), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <h2>メンバーを招待</h2>
+  <%= form_with url: group_group_members_path(@group), local: true do %>
+    <div>
+      <%= label_tag :user_id, "ユーザーIDを入力" %>
+      <%= text_field_tag :user_id, nil, id: 'user_id' %>
+    </div>
+    <p id="user-info-display" style="color: blue; font-weight: bold;"></p> <!-- ここにユーザー情報を表示 -->
+    <%= submit_tag "招待する" %>
+  <% end %>
+</div>

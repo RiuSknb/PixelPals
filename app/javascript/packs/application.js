@@ -21,6 +21,7 @@ import "./admin_comments";
 import "./admin_events";
 import "./admin_diaries";
 import "./admin_users";
+import "./public_group_member_invite"
 
 Rails.start()
 Turbolinks.start()
