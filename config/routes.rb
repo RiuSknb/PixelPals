@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       resources :group_members, only: [:create, :destroy, :update] do
         member do
           delete :leave
+          patch 'accept_invitation'  # 「招待を受け入れる」アクションのルート
         end
       end
     end

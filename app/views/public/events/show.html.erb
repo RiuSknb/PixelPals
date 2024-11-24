@@ -1,15 +1,17 @@
 <div class='container'>
   <h1 class="event-title"><%= @event.title %></h1>
+  <p><strong>ゲーム名:</strong> <%= @game.name %></p>
+  <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
 
   <% if @event.user == current_user %>
     <div class="edit-link">
       <%= link_to '編集', edit_event_path(@event), class: "btn btn-primary" %>
     </div>
-  <% end %>
+  <% end %><br>
 
-  <p class="event-body"><%= @event.body %></p>
-  <p class="event-body"><%= @event.place %></p>
-  <p class="event-body"><%= @event.date.strftime("%Y/%m/%d %H:%M") %></p>
+  <p class="event-body"><strong>イベント内容</strong><%= @event.body %></p>
+  <p class="event-body"><strong>開催場所：</strong><%= @event.place %></p>
+  <p class="event-body"><strong>開催時間：</strong><%= @event.date.strftime("%Y/%m/%d %H:%M") %></p>
 
 
   <%= link_to '自分の投稿一覧（マイページ）へ', mypage_users_path, class: 'btn btn-secondary' %>
@@ -21,14 +23,19 @@
     <ul class="list-group">
       <% @comments.each do |comment| %>
         <li class="list-group-item">
+          <% if comment.user.profile_image.attached? %>
+            <%= image_tag comment.user.profile_image %>
+          <% else %>
+            <%= image_tag "no_image.jpg", alt: "No image" %>
+          <% end %>
           <strong><%= comment.user.name %></strong>:
           <%= comment.body %>
           <small class="text-muted">
             (<%= l comment.created_at, format: :short %>)
           </small>
           <% if comment.user == current_user %> <!-- 自分のコメントのみ編集可能 -->
-            <%= link_to "編集", edit_event_comment_path(comment.commentable_id, comment), class: "btn btn-sm btn-secondary" %>
-          <%= button_to '削除する', event_comment_path(comment.commentable_id, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+            <%= link_to "編集", edit_event_comment_path(comment.commentable_id, comment), class: "btn btn-sm btn-secondary" %> |
+            <%= button_to '削除', event_comment_path(comment.commentable_id, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
           <% end %>
           <p>Comment ID: <%= comment.id %></p>
 

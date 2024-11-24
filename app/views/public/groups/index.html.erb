@@ -1,7 +1,7 @@
 <div class='container'>
   <h1>グループ一覧</h1>
 
-  <%= link_to "新しいグループを作成", new_group_path %>
+ <%= link_to "ゲームを選んでグループを作成する！", games_path, class: "btn btn-primary" %>
 
   <ul>
     <% @groups.each do |group| %>

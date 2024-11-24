@@ -14,6 +14,8 @@ class Public::EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @game = Game.find(@event.game_id)
+    @genre = Genre.find(@event.genre_id)
     @comments = @event.comments.where(is_deleted: false).order(created_at: :desc)
   end
 

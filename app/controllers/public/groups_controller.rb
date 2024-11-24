@@ -2,6 +2,8 @@ class Public::GroupsController < ApplicationController
   before_action :set_group, only: %i[show destroy]
 
   def new
+    @game = Game.find(params[:game_id])
+    @genre = Genre.find(@game.genre_id)
     @group = Group.new
   end
 
@@ -11,6 +13,8 @@ class Public::GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @game = Game.find(@group.game_id)
+    @genre = Genre.find(@game.genre_id)
     @user = User.find(params[:id])
   end
 
@@ -41,7 +45,7 @@ class Public::GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :description, :is_public)
+    params.require(:group).permit(:name, :body, :is_public, :game_id, :genre_id)
   end
 
   def set_group

@@ -46,7 +46,7 @@ h2 {
 }
 .btn-primary {
   display: block;
-  width: 250px;
+  /* width: 250px; */
   margin: 0 auto 20px auto;
   background-color: #2084b3;
   color: white;
