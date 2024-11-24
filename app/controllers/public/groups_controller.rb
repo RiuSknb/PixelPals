@@ -10,7 +10,8 @@ class Public::GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id]) 
+    @group = Group.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def create

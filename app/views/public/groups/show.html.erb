@@ -2,7 +2,8 @@
   <h1><%= @group.name %></h1>
   <p><%= @group.body %></p>
   <p>開設者: <%= @group.owner.name %></p>
-  <% @group_member = @group.group_members.find_by(user: @user) %>
+  <p>あなたのステータス:<%= current_user.group_members.find_by(group_id: @group.id).role %></p>
+<%# <% @group_member = @group.group_members.find_by(user: @user) %> 
 
   <% if @group.owner_id == current_user.id %>
     <%= link_to 'グループを削除', group_path(@group), method: :delete, data: { confirm: '本当に削除しますか？' } %>
@@ -27,9 +28,12 @@
             <% end %>
           <% end %>
 
-          <% if current_user.group_members.find_by(group_id: @group.id)&.role.in?("モデレーター") %>
+          <% if current_user.group_members.find_by(group_id: @group.id)&.role.in?(["開設者", "モデレーター"]) %>
             <% if member.status == "承認待ち" %>
-              <%= link_to "承認", group_group_member_path(@group, member), method: :patch %>
+              <%= form_with(model: [@group, member], method: :patch, local: true) do |f| %>
+                <%= f.hidden_field :status, value: "承認済み" %>
+                <%= f.submit "承認", class: 'btn btn-success btn-sm' %>
+              <% end %>
             <% end %>
             <%= link_to "削除", group_group_member_path(@group, member), method: :delete, data: { confirm: "本当に削除しますか？" } %>
           <% end %>

@@ -29,16 +29,30 @@ class Public::GroupMembersController < ApplicationController
   end
 
   def update
+    Rails.logger.debug "PARAMS: #{params.inspect}"
+    Rails.logger.debug "ROLE KEY: #{params[:group_member].key?(:role)}"
+    Rails.logger.debug "STATUS KEY: #{params[:group_member].key?(:status)}"
+    Rails.logger.debug "PARAMS: #{params.inspect}"
+    Rails.logger.debug "STATUS: #{params[:group_member][:status]}"
+
     group_member = @group.group_members.find(params[:id])
   
     # 開設者がメンバーの役割を変更する場合
-    if @group.owner_id == current_user.id && group_member.update(role_params)
-      redirect_to group_path(@group), notice: "メンバーの役割が変更されました。"
-    # 承認操作の場合
-    elsif group_member.update(status: 1)
-      redirect_to group_path(@group), notice: "メンバーの承認が完了しました。"
+    if params[:group_member].key?(:role) && @group.owner_id == current_user.id
+      if group_member.update(role_params)
+        redirect_to group_path(@group), notice: "メンバーの役割が変更されました。"
+      else
+        redirect_to group_path(@group), alert: "役割の変更に失敗しました。"
+      end
+    # ステータス変更（例: 承認）
+    elsif params[:group_member].key?(:status)
+      if group_member.update(status: params[:group_member][:status])
+        redirect_to group_path(@group), notice: "メンバーの承認が完了しました。"
+      else
+        redirect_to group_path(@group), alert: "承認に失敗しました。"
+      end
     else
-      redirect_to group_path(@group), alert: "更新に失敗しました。"
+      redirect_to group_path(@group), alert: "不正なパラメータが送信されました。"
     end
   end
 
@@ -67,7 +81,7 @@ class Public::GroupMembersController < ApplicationController
   end
 
   def authorize_group_admin!
-    unless @group.owner == current_user || @group.group_members.find_by(user: current_user)&.role == "moderator"
+    unless @group.owner == current_user || @group.group_members.find_by(user: current_user)&.role == "モデレーター"
       redirect_to group_path(@group), alert: "この操作を行う権限がありません。"
     end
   end
