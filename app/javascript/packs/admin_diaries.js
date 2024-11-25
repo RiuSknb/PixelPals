@@ -1,4 +1,4 @@
-document.addEventListener('turbolinks:load', function () {
+$(document).on('turbolinks:load', function() {
   // すべての削除ボタンにクリックイベントを追加
   const deleteButtons = document.querySelectorAll('.delete-btn');
   

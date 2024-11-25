@@ -9,19 +9,15 @@
       <%= link_to 'Diary', diaries_path %> |
       <%= link_to 'Event', events_path %> |
       <%= link_to 'Group', groups_path %> |
-      <%= link_to 'Mypage', mypage_users_path(current_user) %> |
+      <%= link_to 'Mypage', mypage_users_path %> |
       <%= link_to 'User', users_path %> |
-      <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+      <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
       <%= form_with url: search_path, method: :get, local: true do %>
         <div>
           <%= label_tag :query, "検索ワード" %>
           <%= text_field_tag :query, params[:query] %>
-        </div>
-        <div>
           <%= label_tag :category, "検索対象" %>
           <%= select_tag :category, options_for_select([["ゲーム", "games"], ["日記", "diaries"], ["ユーザー", "users"]], params[:category]) %>
-        </div>
-        <div>
           <%= label_tag :match_type, "検索方法" %>
           <%= select_tag :match_type, options_for_select([["部分一致", "partial"], ["完全一致", "exact"]], params[:match_type]) %>
         </div>

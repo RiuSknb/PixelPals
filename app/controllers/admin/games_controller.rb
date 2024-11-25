@@ -28,11 +28,6 @@ class Admin::GamesController < Admin::BaseController
     end
   end
 
-  def destroy
-    @game.destroy
-    redirect_to games_path, notice: 'ゲームが削除されました。'
-  end
-
   private
 
   def set_game

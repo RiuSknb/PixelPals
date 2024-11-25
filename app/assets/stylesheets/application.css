@@ -46,15 +46,10 @@ h2 {
 }
 .btn-primary {
   display: block;
-  /* width: 250px; */
-  margin: 0 auto 20px auto;
   background-color: #2084b3;
   color: white;
-  padding: 10px 15px;
   text-align: center;
-  text-decoration: none;
   border-radius: 5px;
-  font-size: 1.1rem;
 }
 
 .btn-primary:hover {
@@ -65,8 +60,7 @@ h2 {
 .btn-secondary {
   background-color: #6c757d;
   color: white;
-  padding: 10px 20px;
-  text-decoration: none;
+  text-align: center;
   border-radius: 5px;
 }
 
@@ -85,7 +79,7 @@ h2 {
 
 /* 管理者がログインしている場合のヘッダーのスタイル */
 .header.admin-logged-in {
-  background-color: #ff5733; /* 管理者用の背景色 */
+  background-color: #f08ebb; /* 管理者用の背景色 */
   padding: 10px 20px;  /* 上下10px、左右20pxの余白 */
   text-align: center;  /* テキストを中央揃え */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
@@ -133,6 +127,12 @@ h2 {
   color: #555;  /* 文字色を少し落ち着いたグレーに */
   margin-top: 20px;  /* 上部にスペースを追加 */
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
+}
+.footer.admin-logged-in {
+  background-color: #f08ebb; /* 管理者用の背景色 */
+  padding: 10px 20px;  /* 上下10px、左右20pxの余白 */
+  text-align: center;  /* テキストを中央揃え */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
 }
 
 .footer a {

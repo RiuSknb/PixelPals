@@ -5,16 +5,28 @@
   <p><strong>ゲーム名:</strong> <%= @game.name %></p>
   <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
   <p>グループ概要：<%= @group.body %></p>
+  <p>公開設定：
+  <% if @group.is_public = 'true' %>
+    公開
+  <% else %>
+    非公開
+  <% end %>
+  </p>
+  
   <% if current_user.group_members.find_by(group_id: @group.id)&.status != "BAN" %>
     <p>
-      あなたのステータス:
+      あなたのステータス：
       <% group_member = current_user.group_members.find_by(group_id: @group.id) %>
       <% if group_member.present? %>
         <% if group_member.status == '了承待ち' %>
           このグループから招待を受けています
-          <%= link_to "招待を受け取る", accept_invitation_group_group_member_path(@group, group_member), method: :patch, class: "btn btn-success" %>
+          <%= link_to "参加する", accept_invitation_group_group_member_path(@group, group_member), method: :patch, class: "btn btn-success" %>
+          <%= link_to "参加しない", leave_group_group_member_path(@group, current_user.group_members.find_by(group_id: @group.id)), method: :delete, data: { confirm: '招待を受け取らず、グループから退出します'} %>
+        <% elsif group_member.status == '承認待ち' %>
+          参加申請中です
+          <%= button_to "参加取消", leave_group_group_member_path(@group, current_user.group_members.find_by(group_id: @group.id)), method: :delete, data: { confirm: '申請を取り消し、グループから退出します' } %> %>
         <% else %>
-          <p><%= group_member.role %> | <%= group_member.status %></p>
+        【役職】<%= group_member.role %>    【ステータス】<%= group_member.status %>
         <% end %>
       <% else %>
         このグループには加入していません
@@ -27,6 +39,7 @@
 
     <% if @group.owner_id == current_user.id %>
       <%= link_to 'グループを削除', group_path(@group), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+    
     <% elsif group_member.present? %>
       <%= link_to "グループから抜ける", leave_group_group_member_path(@group, current_user.group_members.find_by(group_id: @group.id)), method: :delete, data: { confirm: "本当にグループから抜けますか？" } %>
     <% end %>

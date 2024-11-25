@@ -15,7 +15,7 @@ class Public::GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @game = Game.find(@group.game_id)
     @genre = Genre.find(@game.genre_id)
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def create

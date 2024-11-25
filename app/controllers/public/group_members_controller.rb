@@ -22,7 +22,7 @@ class Public::GroupMembersController < ApplicationController
         return
       end
   
-      group_member = @group.group_members.new(user: current_user, status: 0, role: 2) # 承認待ち
+      group_member = @group.group_members.new(user: current_user, status: 0, role: 4) # 承認待ち
       if group_member.save
         redirect_to group_path(@group), notice: 'グループ加入申請を送信しました。'
       else

@@ -62,7 +62,7 @@ Rails.application.routes.draw do
   # --------------------------------------------------
 
   # 管理者用
-  devise_for :admins, skip: [:registrations, :passwords], controllers: {
+  devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: 'admin/sessions'  # 管理者用ログイン処理を指定
   }
 
@@ -87,10 +87,10 @@ Rails.application.routes.draw do
       end
 
       # Genresコントローラ
-      resources :genres, only: [:index, :show, :edit, :update, :destroy]
+      resources :genres, only: [:new, :index, :show, :create, :edit, :update]
 
       # Gamesコントローラ
-      resources :games, only: [:new, :index, :show, :create, :edit, :update, :destroy]
+      resources :games, only: [:new, :index, :show, :create, :edit, :update]
 
       # Groupsコントローラ
       resources :groups, only: [:index, :show, :edit, :update, :destroy]

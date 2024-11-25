@@ -4,7 +4,7 @@
   <div class="profile">
     <h3>プロフィール情報</h3>
       <% if @user.profile_image.attached? %>
-        <%= image_tag @user.profile_image %>
+        <%= image_tag @user.profile_image, width: 150, height: 150, alt: "Profile Image" %>
       <% else %>
         <%= image_tag "no_image.jpg", alt: "No image" %>
       <% end %>
@@ -28,14 +28,14 @@
           <% end %>
         <% end %>
       <% else %>
-        <p>　まだどのコミュニティにも加入していません</p>
+        <p>  まだどのコミュニティにも加入していません</p>
       <% end %>
 
     <!-- 了承待ちのグループ -->
-    <p><strong>あなたに以下のグループへの勧誘が来ています！</strong></p>
     <% @user.groups.each do |group| %>
       <% group_member = group.group_members.find_by(user: @user) %>
       <% if group_member.present? && group_member.status == "了承待ち" %>
+      <p><strong>あなたに以下のグループへの勧誘が来ています！</strong></p>
         <p>・<%= link_to group.name, group_path(group) %></p>
       <% end %>
     <% end %>
@@ -48,6 +48,7 @@
     <thead>
       <tr>
         <th>投稿タイトル</th>
+        <th>ゲーム</th>
         <th>投稿日</th>
         <th>いいね他</th>
       </tr>
@@ -59,6 +60,7 @@
             <td class="align-middle col-md-3">
               <%= link_to diary.title, diary_path(diary), class: "diary-link" %>
             </td>
+            <td><%= diary.game.name %> (<%= diary.genre.name %>)</td>
             <td><%= diary.created_at.strftime('%Y-%m-%d') %></td>
             <td>♥</td>
           </tr>
@@ -75,6 +77,7 @@
     <thead>
       <tr>
         <th>投稿タイトル</th>
+        <th>ゲーム</th>
         <th>投稿日</th>
         <th>いいね他</th>
       </tr>
@@ -86,6 +89,7 @@
             <td class="align-middle col-md-3">
               <%= link_to event.title, event_path(event), class: "event-link" %>
             </td>
+            <td><%= event.game.name %> (<%= event.genre.name %>)</td>
             <td><%= event.created_at.strftime('%Y/%m/%d %h:%m') %></td>
             <td>♥</td>
           </tr>

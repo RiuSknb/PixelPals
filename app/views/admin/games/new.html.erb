@@ -1,2 +1,21 @@
-<h1>Admin::Games#new</h1>
-<p>Find me in app/views/admin/games/new.html.erb</p>
+<%= form_with model: @game do |f| %>
+  <div class="form-container">
+    <% if @game.errors.any? %>
+      <div class="error_messages">
+        <ul>
+          <% @game.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="game-form">
+      <%= f.hidden_field :genre_id, value: @genre.id %>
+      <%= f.text_field :title, placeholder: "タイトル", class: "form-input" %>
+      <%= f.text_area :body, placeholder: "本文", class: "form-input" %>
+    </div>
+
+    <%= f.submit "投稿する", class: 'submit-button' %>
+  </div>
+<% end %>
