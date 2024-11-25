@@ -1,2 +1,28 @@
-<h1>Public::Groups#new</h1>
-<p>Find me in app/views/public/groups/new.html.erb</p>
+<div class='container'>
+  <h1>グループを作成</h1>
+
+  <%= form_with model: @group, local: true do |f| %>
+    <div class="game-info">
+      <p><strong>ゲーム名:</strong> <%= @game.name %></p>
+      <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
+    </div>
+
+    <div>
+      <%= f.label :name, "グループ名" %>
+      <%= f.text_field :name %>
+    </div>
+    <div>
+      <%= f.label :body, "説明" %>
+      <%= f.text_area :body %>
+    </div>
+    <div>
+      <%= f.label :is_public, "公開グループにする" %>
+      <%= f.check_box :is_public %>
+    </div>
+
+    <%= f.hidden_field :game_id, value: @game.id %>
+    <%= f.hidden_field :genre_id, value: @genre.id %>
+
+    <%= f.submit "作成" %>
+  <% end %>
+</div>

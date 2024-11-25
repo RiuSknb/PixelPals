@@ -5,6 +5,7 @@ class Public::UsersController < ApplicationController
 
   def mypage
     @user = current_user
+    @groups = @user.groups.all
     @diaries = @user.diaries.where(is_deleted: false).includes(:likes, :comments).order(created_at: :desc)
     @events = @user.events.where(is_deleted: false).includes(:likes, :comments).order(created_at: :desc)
     # 例：ユーザーの投稿一覧
@@ -18,6 +19,7 @@ class Public::UsersController < ApplicationController
   end
 
   def show
+    @user = User.includes(:diaries, :events).find(params[:id])
   end
 
   def create
@@ -28,17 +30,57 @@ class Public::UsersController < ApplicationController
   end
 
   def update
+    @user = current_user
+    if @user.update(user_params)
+      # 更新が成功した場合、mypageにリダイレクト
+      redirect_to mypage_users_path, notice: "情報を更新しました。"
+    else
+      # 更新が失敗した場合は再度編集ページを表示
+      render :edit, alert: "更新に失敗しました。"
+    end
   end
 
   def deactivate
-    current_user.destroy
-    sign_out current_user
-    reset_session
+    @user = current_user
+    begin
+      # ユーザーに関連するデータの論理削除
+      @user.comments.find_each do |comment|
+        comment.delete
+      end
+      @user.diaries.find_each do |diary|
+        diary.destroy
+      end
+      @user.events.find_each do |event|
+        event.delete
+      end
+      
+      @user.update(status_reason: "退会のため")
+    
+      # ユーザー自身を非アクティブ化
+      @user.update(is_active: false)
+      redirect_to users_path
+    rescue => e
+      logger.error "Error during user deactivation: #{e.message}"
+      logger.error e.backtrace.join("\n")  # エラーのバックトレースをログに出力
+      flash[:alert] = 'ユーザーの非アクティブ化に失敗しました'
+      redirect_to mypage_users_path
+    end
+  end
 
-    redirect_to root_path, notice: '退会処理が完了しました。'
+  def find_by_id
+    user = User.find_by(id: params[:id])
+    if user
+      render json: { success: true, name: user.name }
+    else
+      render json: { success: false, error: "ユーザーが見つかりませんでした" }, status: 404
+    end
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:name, :email, :profile_image)
+  end
 
   # 編集しようとするユーザーがログイン中のユーザーか確認
   def ensure_correct_user

@@ -1,2 +1,78 @@
-<h1>Public::Users#show</h1>
-<p>Find me in app/views/public/users/show.html.erb</p>
+<div class='container'>
+  <h1 class="mypage-title"><%= @user.name %> さんのマイページ</h1>
+  <% if @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image %>
+  <% else %>
+    <%= image_tag "no_image.jpg", alt: "No image" %>
+  <% end %>
+  <div class="profile">
+    <h3>プロフィール情報</h3>
+    <p><strong>メールアドレス:</strong> <%= @user.email %></p>
+    <p><strong>登録日:</strong> <%= @user.created_at.strftime('%Y/%m/%d') %></p>
+  </div>
+  <div>
+  <p>参加しているグループ</p>
+    <% @user.groups.each do |group| %>
+      <% unless group.is_public == false %>
+        <li>
+          <%= link_to group.name, group_path(group) %> 
+        </li>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class='container'>
+  <table class="diary-table">
+    <thead>
+      <tr>
+        <th>投稿タイトル</th>
+        <th>投稿日</th>
+        <th>いいね他</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @user.diaries.any? %>
+        <% @user.diaries.each do |diary| %>
+          <tr>
+            <td class="align-middle col-md-3">
+              <%= link_to diary.title, diary_path(diary), class: "diary-link" %>
+            </td>
+            <td><%= diary.created_at.strftime('%Y-%m-%d') %></td>
+            <td>♥</td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="no-posts">まだ投稿はありません</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <table class="event-table">
+    <thead>
+      <tr>
+        <th>投稿タイトル</th>
+        <th>投稿日</th>
+        <th>いいね他</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @user.events.any? %>
+        <% @user.events.each do |event| %>
+          <tr>
+            <td class="align-middle col-md-3">
+              <%= link_to event.title, event_path(event), class: "event-link" %>
+            </td>
+            <td><%= event.created_at.strftime('%Y/%m/%d %h:%m') %></td>
+            <td>♥</td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="no-posts">まだ投稿はありません</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

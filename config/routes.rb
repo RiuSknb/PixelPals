@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :new, :show, :edit, :create, :update, :destroy] do
       collection do
         get 'mypage', to: 'users#mypage', as: 'mypage' # マイページ用のカスタムルート
+        get 'find_by_id', to: 'users#find_by_id'
       end
       member do
         put :deactivate
@@ -46,17 +47,22 @@ Rails.application.routes.draw do
 
     # Groupsコントローラ
     resources :groups do
-      resources :group_members, only: [:create, :destroy, :update]
+      resources :group_members, only: [:create, :destroy, :update] do
+        member do
+          delete :leave
+          patch 'accept_invitation'  # 「招待を受け入れる」アクションのルート
+        end
+      end
     end
 
-    # Group_membersコントローラ
-    resources :group_members
+    # # Group_membersコントローラ
+    # resources :group_members
   end
 
   # --------------------------------------------------
 
   # 管理者用
-  devise_for :admins, skip: [:registrations, :passwords], controllers: {
+  devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: 'admin/sessions'  # 管理者用ログイン処理を指定
   }
 
@@ -81,10 +87,10 @@ Rails.application.routes.draw do
       end
 
       # Genresコントローラ
-      resources :genres, only: [:index, :show, :edit, :update, :destroy]
+      resources :genres, only: [:new, :index, :show, :create, :edit, :update]
 
       # Gamesコントローラ
-      resources :games, only: [:new, :index, :show, :create, :edit, :update, :destroy]
+      resources :games, only: [:new, :index, :show, :create, :edit, :update]
 
       # Groupsコントローラ
       resources :groups, only: [:index, :show, :edit, :update, :destroy]

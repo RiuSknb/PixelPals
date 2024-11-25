@@ -1,2 +1,14 @@
-<h1>Public::Groups#index</h1>
-<p>Find me in app/views/public/groups/index.html.erb</p>
+<div class='container'>
+  <h1>グループ一覧</h1>
+
+ <%= link_to "ゲームを選んでグループを作成する！", games_path, class: "btn btn-primary" %>
+
+  <ul>
+    <% @groups.each do |group| %>
+      <li>
+        <%= link_to group.name, group_path(group) %>
+        <%= group.body %>
+      </li>
+    <% end %>
+  </ul>
+</div>

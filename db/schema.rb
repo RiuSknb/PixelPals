@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_20_000600) do
+ActiveRecord::Schema.define(version: 2024_11_24_035711) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -121,7 +121,8 @@ ActiveRecord::Schema.define(version: 2024_11_20_000600) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "group_id", null: false
     t.integer "user_id", null: false
-    t.string "role", default: "member", null: false
+    t.integer "role", default: 3, null: false
+    t.integer "status", default: 0, null: false
     t.index ["group_id", "user_id"], name: "index_group_members_on_group_id_and_user_id", unique: true
     t.index ["group_id"], name: "index_group_members_on_group_id"
     t.index ["user_id"], name: "index_group_members_on_user_id"
@@ -138,6 +139,7 @@ ActiveRecord::Schema.define(version: 2024_11_20_000600) do
     t.boolean "is_public", default: true
     t.boolean "is_deleted", default: false
     t.string "deleted_by"
+    t.string "status"
     t.index ["game_id"], name: "index_groups_on_game_id"
     t.index ["genre_id"], name: "index_groups_on_genre_id"
     t.index ["owner_id"], name: "index_groups_on_owner_id"

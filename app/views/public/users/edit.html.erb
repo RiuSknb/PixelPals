@@ -29,7 +29,9 @@
 
     <%= form.submit '更新', class: 'btn btn-primary' %>
   <% end %>
-  <%= button_to '退会する', deactivate_user_path, method: :put, data: { confirm: '本当に退会しますか？退会後は元に戻すことができませんので、よくご確認の上、進んでください。' }, class: 'btn btn-danger' %>
-
-  <%= link_to 'マイページへ戻る', mypage_users_path(@user), class: 'btn btn-secondary' %>
+  <%= button_to '退会する', deactivate_user_path(current_user), 
+              method: :put, 
+              data: { confirm: '本当に退会しますか？退会後は投稿データが全て削除され、元に戻すことができません。' }, 
+              class: 'btn btn-danger' %>
+  <%= link_to 'マイページへ戻る', mypage_users_path, class: 'btn btn-secondary' %>
 </div>

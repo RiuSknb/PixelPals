@@ -1,2 +1,19 @@
-<h1>Admin::Genres#new</h1>
-<p>Find me in app/views/admin/genres/new.html.erb</p>
+<%= form_with model: @genre, url: admin_genres_path, method: :post do |f| %>
+  <div class="form-container">
+    <% if @genre.errors.any? %>
+      <div class="error_messages">
+        <ul>
+          <% @genre.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="genre-form">
+      <%= f.text_field :name, placeholder: "ジャンル名", class: "form-input" %>
+    </div>
+
+    <%= f.submit "登録", class: 'submit-button' %>
+  </div>
+<% end %>

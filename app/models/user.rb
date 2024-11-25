@@ -5,12 +5,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :group_members, dependent: :destroy
-  has_many :groups, through: :group_members
+  has_many :groups, through: :group_members, dependent: :destroy
   has_many :diaries, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_one_attached :profile_image
+  has_one_attached :profile_image, dependent: :destroy
 
   
   # バリデーションを追加
@@ -23,7 +23,7 @@ class User < ApplicationRecord
   
   # アクティブユーザーかどうかをチェックするメソッド
   def active_for_authentication?
-    super && is_active
+    super && is_active?
   end
 
   # アカウントが無効化された場合のメッセージ
@@ -44,5 +44,11 @@ class User < ApplicationRecord
 
   def set_default_is_active
     self.is_active ||= true
+  end
+
+  def debug_related_data
+    Rails.logger.debug "Diaries: #{diaries.inspect}"
+    Rails.logger.debug "Events: #{events.inspect}"
+    Rails.logger.debug "Comments: #{comments.inspect}"
   end
 end

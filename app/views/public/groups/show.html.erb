@@ -1,2 +1,123 @@
-<h1>Public::Groups#show</h1>
-<p>Find me in app/views/public/groups/show.html.erb</p>
+<div class='container'>
+  <h1><%= @group.name %></h1>
+  <p><%= @group.body %></p>
+  <p>開設者: <%= @group.owner.name %></p>
+  <p><strong>ゲーム名:</strong> <%= @game.name %></p>
+  <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
+  <p>グループ概要：<%= @group.body %></p>
+  <p>公開設定：
+  <% if @group.is_public = 'true' %>
+    公開
+  <% else %>
+    非公開
+  <% end %>
+  </p>
+  
+  <% if current_user.group_members.find_by(group_id: @group.id)&.status != "BAN" %>
+    <p>
+      あなたのステータス：
+      <% group_member = current_user.group_members.find_by(group_id: @group.id) %>
+      <% if group_member.present? %>
+        <% if group_member.status == '了承待ち' %>
+          このグループから招待を受けています
+          <%= link_to "参加する", accept_invitation_group_group_member_path(@group, group_member), method: :patch, class: "btn btn-success" %>
+          <%= link_to "参加しない", leave_group_group_member_path(@group, current_user.group_members.find_by(group_id: @group.id)), method: :delete, data: { confirm: '招待を受け取らず、グループから退出します'} %>
+        <% elsif group_member.status == '承認待ち' %>
+          参加申請中です
+          <%= button_to "参加取消", leave_group_group_member_path(@group, current_user.group_members.find_by(group_id: @group.id)), method: :delete, data: { confirm: '申請を取り消し、グループから退出します' } %> %>
+        <% else %>
+        【役職】<%= group_member.role %>    【ステータス】<%= group_member.status %>
+        <% end %>
+      <% else %>
+        このグループには加入していません
+        <%= form_with url: group_group_members_path(@group), method: :post, local: true do |f| %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <%= f.submit "グループ加入申請を送る", class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+    </p>
+
+    <% if @group.owner_id == current_user.id %>
+      <%= link_to 'グループを削除', group_path(@group), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+    
+    <% elsif group_member.present? %>
+      <%= link_to "グループから抜ける", leave_group_group_member_path(@group, current_user.group_members.find_by(group_id: @group.id)), method: :delete, data: { confirm: "本当にグループから抜けますか？" } %>
+    <% end %>
+
+    <h2>メンバー一覧</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>役職</th>
+          <th>ステータス</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @group.group_members.each do |member| %>
+          <% unless member.role == "開設者" %>
+            <tr>
+              <td><%= link_to member.user.name, user_path(member.user) %></td>
+              <td><%= member.role %></td>
+              <td><%= member.status %></td>
+              <td>
+                <% if @group.owner_id == current_user.id %>
+                  <%= form_with(model: [@group, member], method: :patch, local: true) do |f| %>
+                    <%= f.select :role, GroupMember.roles.keys.reject { |role| role == "開設者" }, { selected: member.role }, class: 'form-select' %>
+                    <%= f.submit "変更", class: 'btn btn-primary btn-sm' %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% if current_user.group_members.find_by(group_id: @group.id)&.role.in?(["開設者", "モデレーター"]) %>
+                  <% if member.status == "承認待ち" %>
+                    <%= form_with(model: [@group, member], method: :patch, local: true) do |f| %>
+                      <%= f.hidden_field :status, value: "承認済み" %>
+                      <%= f.submit "承認", class: 'btn btn-success btn-sm' %>
+                    <% end %>
+                  <% end %>
+              </td>
+              <td>
+                  <% if member.status != "BAN" %>
+                    <%= form_with(model: [@group, member], method: :patch, local: true) do |f| %>
+                      <%= f.hidden_field :status, value: "BAN" %> <!-- BANを選択する -->
+                      <%= f.submit "BANする", class: 'btn btn-danger btn-sm' %>
+                    <% end %>
+                  <% end %>
+                  <% if member.status == "BAN" %>
+                    <%= form_with(model: [@group, member], method: :patch, local: true) do |f| %>
+                      <%= f.hidden_field :status, value: "承認済み" %>
+                      <%= f.submit "BAN解除", class: 'btn btn-success btn-sm' %>
+                    <% end %>
+                  <% end %>
+              </td>
+              <td>
+
+                  <%= link_to "削除", group_group_member_path(@group, member), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if current_user.group_members.find_by(group_id: @group.id)&.role.in?(["開設者", "モデレーター"]) %>
+      <h2>メンバーを招待</h2>
+      <%= form_with url: group_group_members_path(@group), local: true do %>
+        <div>
+          <%= label_tag :user_id, "ユーザーIDを入力" %>
+          <%= text_field_tag :user_id, nil, id: 'user_id' %>
+        </div>
+        <p id="user-info-display" style="color: blue; font-weight: bold;"></p> <!-- ここにユーザー情報を表示 -->
+        <%= submit_tag "招待する" %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>あなたはBANされているため、このページを閲覧することができません。</p>
+  <% end %>
+</div>

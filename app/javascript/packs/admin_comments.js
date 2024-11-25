@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+$(document).on('turbolinks:load', function() {
   // 削除ボタンのクリックイベントを監視
   document.querySelectorAll('.delete-btn').forEach(function(button) {
     button.addEventListener('click', function(e) {
