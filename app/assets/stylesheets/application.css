@@ -66,6 +66,19 @@ h2 {
 
 .btn-secondary:hover {
   background-color: #5a6268;
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color: #ad1d1d;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.btn-danger:hover {
+  background-color: #381616;
+  text-decoration: none;
 }
 /* ------------------------------*/
 /* ----------|header|---------- */
