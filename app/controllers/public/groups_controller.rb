@@ -2,8 +2,6 @@ class Public::GroupsController < ApplicationController
   before_action :set_group, only: %i[show destroy]
 
   def new
-    @game = Game.find(params[:game_id])
-    @genre = Genre.find(@game.genre_id)
     @group = Group.new
   end
 

@@ -1,14 +1,24 @@
 <div class='container'>
   <h1>グループ一覧</h1>
-
- <%= link_to "ゲームを選んでグループを作成する！", games_path, class: "btn btn-primary" %>
-
-  <ul>
-    <% @groups.each do |group| %>
-      <li>
-        <%= link_to group.name, group_path(group) %>
-        <%= group.body %>
-      </li>
-    <% end %>
-  </ul>
+  <%= link_to "新規作成", new_group_path, class: "btn btn-primary" %>
+  <% if @groups.any? %>
+    <table class="diary-table">
+      <tr>
+        <th>is_deleted</th>
+        <th>グループ名</th>
+        <th>ゲーム</th>
+        <th>ジャンル</th>
+      </tr>
+      <% @groups.each do |group| %>
+        <tr>
+          <td><%= group.is_deleted %></td>
+          <td><%= link_to group.name, group_path(group) %></td>
+          <td><%= group.game.name %></td>
+          <td><%= group.genre.name %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>まだグループは作成されていません</p>
+  <% end %>
 </div>

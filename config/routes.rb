@@ -93,7 +93,12 @@ Rails.application.routes.draw do
       resources :games, only: [:new, :index, :show, :create, :edit, :update]
 
       # Groupsコントローラ
-      resources :groups, only: [:index, :show, :edit, :update, :destroy]
+      resources :groups, only: [:index, :show, :edit, :update, :destroy] do
+        member do
+          patch :activate
+          patch :deactivate
+        end
+      end
 
       # Group_membersコントローラ
       resources :group_members, only: [:index, :show, :edit, :update, :destroy]

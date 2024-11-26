@@ -1,23 +1,20 @@
-<p>みんなが投稿したイベントの一覧です（public/events/index）</p>
 <div class='container'>
-  <%= link_to "ゲームを選んで投稿する！", games_path, class: "btn btn-primary" %>
+  <%= link_to "新規投稿", new_event_path, class: "btn btn-primary" %>
   <h1>イベント一覧</h1>
   <% if @events.any? %>
     <table class="event-table">
       <tr>
-        <th>is_deleted</th>
         <th>投稿者</th>
         <th>ゲーム</th>
         <th>ジャンル</th>
         <th>タイトル</th>
         <th>開催日時</th>
-        <th>編集</th>
-        <th>削除</th>
+        <th></th>
+        <th></th>
       </tr>
       <% @events.each do |event| %>
         <tr>
-          <td><%= event.is_deleted %></td>
-          <td><%= event.user.name %></td>
+          <td><%= link_to event.user.name, user_path(event.user) %></td>
           <td><%= event.game.name %></td>
           <td><%= event.genre.name %></td>
           <td><%= link_to event.title, event_path(event) %></td>
@@ -25,6 +22,9 @@
           <% if event.user == current_user && !event.is_deleted %>
             <td><%= link_to '編集', edit_event_path(event) %>
             <td><%= link_to '削除', event_path(event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %></td>
+          <% else %>
+            <td></td>
+            <td></td>
           <% end %>
         </tr>
       <% end %>
