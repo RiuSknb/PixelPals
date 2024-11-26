@@ -21,10 +21,10 @@
       <%= form.label :body, '本文' %>
       <%= form.text_area :body, class: 'form-control', rows: 5 %>
     </div>
-
     <%= form.submit '更新', class: 'btn btn-primary' %>
   <% end %>
 
+  <%= link_to '削除', diary_path(@diary), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
   <%= link_to '詳細に戻る', diary_path(@diary), class: 'btn btn-secondary' %>
   <%= link_to '日記一覧に戻る', diaries_path, class: 'btn btn-secondary' %>
 </div>

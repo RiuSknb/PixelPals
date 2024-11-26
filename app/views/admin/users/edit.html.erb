@@ -22,8 +22,22 @@
       <%= form.text_field :email, class: 'form-control', rows: 5 %>
     </div>
 
+    <button class="btn btn-danger delete-btn" data-user-id="<%= @user.id %>">停止</button>
+    <!-- 停止理由入力フォーム（非表示） -->
+    <div id="delete-reason-form-<%= @user.id %>" class="delete-reason-form" style="display: none; margin-top: 10px;">
+      <%= form_with url: admin_user_path(@user), method: :delete, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :reason, '停止理由' %>
+          <%= f.text_area :reason, class: 'form-control', rows: 3 %>
+        </div>
+        <%= f.submit '停止実行', class: 'btn btn-danger' %>
+      <% end %>
+    </div>
+
     <%= form.submit '更新', class: 'btn btn-primary' %>
   <% end %>
 
   <%= link_to '詳細へ戻る', admin_user_path(@user), class: 'btn btn-secondary' %>
 </div>
+
+<%= javascript_pack_tag 'admin_users' %>

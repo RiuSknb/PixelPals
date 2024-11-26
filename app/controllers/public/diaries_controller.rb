@@ -4,8 +4,6 @@ class Public::DiariesController < ApplicationController
 
 
   def new
-    @game = Game.find(params[:game_id])
-    @genre = Genre.find(@game.genre_id)
     @diary = Diary.new
   end
 
@@ -14,13 +12,16 @@ class Public::DiariesController < ApplicationController
   end
 
   def show
-    @diary = Diary.find(params[:id])
+    @diary = Diary.find_by(id: params[:id])
+
+    if @diary.nil?
+      flash[:alert] = "その投稿は存在しません。"
+      redirect_to root_path # もしくは他の任意のページ
+    end
   end
 
 
   def create
-    @game = Game.find(params[:game_id])
-    @genre = Genre.find(@game.genre_id)
     @diary = Diary.new(diary_params)
 
     if @diary.save
@@ -48,7 +49,7 @@ class Public::DiariesController < ApplicationController
     @diary = Diary.find(params[:id])
     if @diary.user == current_user
       @diary.destroy # データベースから削除
-      redirect_to diaries_path, notice: '投稿が削除されました。'
+      redirect_to mypage_users_path, notice: '投稿が削除されました。'
     else
       redirect_to root_path, alert: '削除権限がありません。'
     end

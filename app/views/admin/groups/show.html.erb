@@ -1,2 +1,43 @@
-<h1>Admin::Groups#show</h1>
-<p>Find me in app/views/admin/groups/show.html.erb</p>
+<div class='container'>
+  <h1><%= @group.name %></h1>
+  <p><%= @group.body %></p>
+  <%# <p>開設者: <%= link_to @group.owner.name, user_path(@group.owner)  %></p>
+  <p><strong>ゲーム名:</strong> <%= @game.name %></p>
+  <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
+  <p>グループ概要：<%= @group.body %></p>
+  <p>公開設定：
+    <% if @group.is_public = 'true' %>
+      公開
+    <% else %>
+      非公開
+    <% end %>
+  </p>
+  <p>グループの無効化： <%= @group.is_deleted %></p>
+
+  <% if @group.is_deleted ='true' %>
+    <%= link_to 'グループを有効化', activate_admin_group_path(@group), method: :patch, data: { confirm: '本当にこのグループを有効化しますか？' }, class: 'btn btn-primary' %>
+  <% else %>
+    <%= link_to 'グループを無効化', deactivate_admin_group_path(@group), method: :patch, data: { confirm: '本当にこのグループを削除しますか？' }, class: 'btn btn-warning' %>
+  <% end %>
+
+
+  <h2>メンバー一覧</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>名前</th>
+        <th>役職</th>
+        <th>ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @group.group_members.each do |member| %>
+        <tr>
+          <td><%= link_to member.user.name, admin_user_path(member.user) %></td>
+          <td><%= member.role %></td>
+          <td><%= member.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

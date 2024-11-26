@@ -3,8 +3,6 @@ class Public::EventsController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update]
 
   def new
-    @game = Game.find(params[:game_id])
-    @genre = Genre.find(@game.genre_id)
     @event = Event.new
   end
 
@@ -13,11 +11,22 @@ class Public::EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = Event.find_by(id: params[:id])
+  
+    if @event.nil?
+      flash[:alert] = "そのイベントは存在しません。"
+      redirect_to events_path # イベント一覧ページなど、適切なリダイレクト先を指定
+      return
+    end
+  
+    # イベントが存在する場合のみ以下の処理を実行
     @game = Game.find(@event.game_id)
     @genre = Genre.find(@event.genre_id)
     @comments = @event.comments.where(is_deleted: false).order(created_at: :desc)
   end
+
+
+
 
   def edit
   end
@@ -32,8 +41,6 @@ class Public::EventsController < ApplicationController
   end
 
   def create
-    @game = Game.find(params[:game_id])
-    @genre = Genre.find(@game.genre_id)
     @event = Event.new(event_params)
 
     if @event.save
@@ -41,14 +48,16 @@ class Public::EventsController < ApplicationController
     else
       flash[:error] = @event.errors.full_messages.join(', ')
       render :new
-    end    
+    end
   end
+
+
 
   def destroy
     @event = Event.find(params[:id])
     if @event.user == current_user
       @event.destroy # データベースから削除
-      redirect_to events_path, notice: '投稿が削除されました。'
+      redirect_to mypage_users_path, notice: '投稿が削除されました。'
     else
       redirect_to root_path, alert: '削除権限がありません。'
     end

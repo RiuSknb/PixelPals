@@ -1,2 +1,23 @@
-<h1>Admin::Groups#index</h1>
-<p>Find me in app/views/admin/groups/index.html.erb</p>
+<div class='container'>
+  <h1>グループ一覧</h1>
+  <% if @groups.any? %>
+    <table class="diary-table">
+      <tr>
+        <th>is_deleted</th>
+        <th>グループ名</th>
+        <th>ゲーム</th>
+        <th>ジャンル</th>
+      </tr>
+      <% @groups.each do |group| %>
+        <tr>
+          <td><%= group.is_deleted %></td>
+          <td><%= link_to group.name, admin_group_path(group) %></td>
+          <td><%= group.game.name %></td>
+          <td><%= group.genre.name %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>まだグループは作成されていません</p>
+  <% end %>
+</div>
