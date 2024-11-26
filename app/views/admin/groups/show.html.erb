@@ -12,7 +12,7 @@
       非公開
     <% end %>
   </p>
-  <p>グループの無効化：<%= @group.is_deleted %></p>
+  <p>グループの無効化： <%= @group.is_deleted %></p>
 
   <% if @group.is_deleted ='true' %>
     <%= link_to 'グループを有効化', activate_admin_group_path(@group), method: :patch, data: { confirm: '本当にこのグループを有効化しますか？' }, class: 'btn btn-primary' %>
