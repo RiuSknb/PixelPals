@@ -6,7 +6,7 @@
   <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
   <p>グループ概要：<%= @group.body %></p>
   <p>公開設定：
-  <% if @group.is_public = 'true' %>
+  <% if @group.is_public %>
     公開
   <% else %>
     非公開

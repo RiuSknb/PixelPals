@@ -4,7 +4,6 @@
   <% if @diaries.any? %>
     <table class="diary-table">
       <tr>
-        <th>is_deleted</th>
         <th>投稿者</th>
         <th>ゲーム</th>
         <th>ジャンル</th>
@@ -14,7 +13,6 @@
       </tr>
       <% @diaries.each do |diary| %>
         <tr>
-          <td><%= diary.is_deleted %></td>
           <td><%= link_to diary.user.name, user_path(diary.user) %></td>
           <td><%= diary.game.name %></td>
           <td><%= diary.genre.name %></td>

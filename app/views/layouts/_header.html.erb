@@ -11,7 +11,7 @@
       <%= link_to 'Group', groups_path %> |
       <%= link_to 'Mypage', mypage_users_path %> |
       <%= link_to 'User', users_path %> |
-      <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
+      <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
       <%= form_with url: search_path, method: :get, local: true do %>
         <div>
           <%= label_tag :query, "検索ワード" %>
@@ -35,7 +35,7 @@
       <%= link_to 'Group', admin_groups_path %> |
       <%= link_to 'Game', admin_games_path %> |
       <%= link_to 'Genre', admin_genres_path %> |
-      <%= button_to 'Log out', destroy_admin_session_path, method: :delete %>
+      <%= link_to 'Log out', destroy_admin_session_path, method: :delete %>
     </div>
   <%# 非ログイン時 %>
   <% else %> 

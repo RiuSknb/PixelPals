@@ -4,14 +4,12 @@
   <% if @groups.any? %>
     <table class="diary-table">
       <tr>
-        <th>is_deleted</th>
         <th>グループ名</th>
         <th>ゲーム</th>
         <th>ジャンル</th>
       </tr>
       <% @groups.each do |group| %>
         <tr>
-          <td><%= group.is_deleted %></td>
           <td><%= link_to group.name, group_path(group) %></td>
           <td><%= group.game.name %></td>
           <td><%= group.genre.name %></td>
