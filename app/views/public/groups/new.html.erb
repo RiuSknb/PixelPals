@@ -1,4 +1,4 @@
-<div class='container'>
+<div class='form-container'>
   <h1>グループを作成</h1>
   <%= form_with model: @group, local: true do |f| %>
     <% if @group.errors.any? %>
@@ -16,13 +16,12 @@
       <%= f.collection_select :game_id, Game.all, :id, :name, prompt: "ゲームを選択してください" %>
     </div>
 
-    <div class="form-group">
-      <%= f.label :name, "グループ名" %>
-      <%= f.text_field :name, value: @group.name %>
+    <div class="group-form">
+      <%= f.text_field :name, placeholder: "グループ名", class: "form-input" %>
+      <%= f.text_area :body, placeholder: "このグループの概要", class: "form-input" %>
     </div>
     <div class="form-group">
-      <%= f.label :body, "このグループの概要" %>
-      <%= f.text_area :body, value: @group.body %>
+
     </div>
     <div class="form-group">
       <%= f.label :is_public, "公開グループにする" %>
