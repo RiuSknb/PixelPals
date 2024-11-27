@@ -1,5 +1,6 @@
 class Public::GroupsController < ApplicationController
   before_action :set_group, only: %i[show destroy]
+  before_action :authenticate_user!, only: [:index,:show]
 
   def new
     @group = Group.new
