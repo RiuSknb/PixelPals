@@ -1,4 +1,4 @@
-<%= form_with model: @game do |f| %>
+<%= form_with model: @game, url: admin_games_path, method: :post do |f| %>
   <div class="form-container">
     <% if @game.errors.any? %>
       <div class="error_messages">
@@ -11,9 +11,9 @@
     <% end %>
 
     <div class="game-form">
-      <%= f.hidden_field :genre_id, value: @genre.id %>
-      <%= f.text_field :title, placeholder: "タイトル", class: "form-input" %>
-      <%= f.text_area :body, placeholder: "本文", class: "form-input" %>
+      <%= f.label :genre_id, "ジャンルを選択" %>
+      <%= f.collection_select :genre_id, Genre.all, :id, :name, prompt: "ジャンルを選んでください", class: "form-input" %>
+      <%= f.text_field :name, placeholder: "ゲーム名", class: "form-input" %>
     </div>
 
     <%= f.submit "投稿する", class: 'submit-button' %>

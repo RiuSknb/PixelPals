@@ -1,5 +1,6 @@
 class Admin::GamesController < Admin::BaseController
   def new
+    @game = Game.new
   end
 
   def index
@@ -11,6 +12,12 @@ class Admin::GamesController < Admin::BaseController
   end
 
   def create
+    @game = Game.new(game_params)
+    if @game.save
+      redirect_to admin_games_path, notice: 'ジャンルを登録しました。'
+    else
+      render :new
+    end
   end
 
   def edit
