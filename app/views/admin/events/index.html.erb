@@ -4,7 +4,6 @@
   <% if @events.any? %>
     <table class="event-table">
       <tr>
-        <th>is_deleted</th>
         <th>投稿者</th>
         <th>ゲーム</th>
         <th>ジャンル</th>
@@ -15,7 +14,6 @@
       </tr>
       <% @events.each do |event| %>
         <tr>
-          <td><%= event.is_deleted %></td>
           <td><%= event.user.name %></td>
           <td><%= event.game.name %></td>
           <td><%= event.genre.name %></td>
@@ -23,6 +21,7 @@
           <td><%= event.date.strftime("%Y/%m/%d %H:%M") %></td>
           <% if event.is_deleted? %>
             <td><p>削除理由: <%= event.deleted_reason %></p></td>
+            <td><p>削除済</p></td>
           <% else %>
             <td><%= link_to '編集', edit_admin_event_path(event) %></td>
             <td><%= button_to '削除', '#', class: 'btn btn-danger delete-btn', data: { event_id: event.id } %></td>
