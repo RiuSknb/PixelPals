@@ -14,7 +14,7 @@
   </p>
   <p>グループの無効化： <%= @group.is_deleted %></p>
 
-  <% if @group.is_deleted ='true' %>
+  <% if @group.is_deleted %>
     <%= link_to 'グループを有効化', activate_admin_group_path(@group), method: :patch, data: { confirm: '本当にこのグループを有効化しますか？' }, class: 'btn btn-primary' %>
   <% else %>
     <%= link_to 'グループを無効化', deactivate_admin_group_path(@group), method: :patch, data: { confirm: '本当にこのグループを削除しますか？' }, class: 'btn btn-warning' %>
