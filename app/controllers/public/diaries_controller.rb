@@ -1,8 +1,8 @@
 class Public::DiariesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  # indexとshowのみログインなしでアクセス可能
   before_action :ensure_correct_user, only: [:edit, :update]
-
-
+  before_action :set_background_image
+  
   def new
     @diary = Diary.new
   end
@@ -57,6 +57,10 @@ class Public::DiariesController < ApplicationController
 
 
   private
+
+  def set_background_image
+    @background_image = 'cat_y.jpg'
+  end
   
   # `post_params` で、date や他のフィールドを許可
   def diary_params

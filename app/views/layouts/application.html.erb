@@ -17,11 +17,23 @@
     <%= javascript_pack_tag 'public_group_member_invite', defer: true %>
   </head>
 
-  <body>
-    <%= render 'layouts/header' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
-    <%= render 'layouts/footer' %>
+  <body style="background-image: url(<%= asset_path(@background_image || 'cat_bl.jpg') %>);
+              background-size: cover;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              height: 100%;
+              margin: 0;
+              background-color: rgba(255, 255, 255, 0.5);
+              background-blend-mode: lighten;">
+    <div class="page-container">
+      <%= render 'layouts/header' %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <div class="content">
+        <%= yield %>
+      </div>
+      <%= render 'layouts/footer' %>
+    </div>
   </body>
 </html>

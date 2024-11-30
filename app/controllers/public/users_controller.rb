@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :set_background_image
   # ログイン必須
 
   def mypage
@@ -77,6 +78,10 @@ class Public::UsersController < ApplicationController
   end
 
   private
+
+  def set_background_image
+    @background_image = 'cat_g.jpg'
+  end
 
   def user_params
     params.require(:user).permit(:name, :email, :profile_image)

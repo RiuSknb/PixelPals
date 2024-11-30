@@ -1,31 +1,48 @@
 <h1>検索結果</h1>
+
 <div class='container'>
-  <p>検索ワード: <%= @query %></p>
-  <% if @results.present? %>
-    <% case @category %>
-    <% when "games" %>
-      <h2>ゲーム</h2>
-      <ul>
-        <% @results.each do |game| %>
-          <li><%= link_to game.name, game_path(game) %></li>
-        <% end %>
-      </ul>
-    <% when "diaries" %>
-      <h2>投稿</h2>
-      <ul>
-        <% @results.each do |diary| %>
-          <li><%= link_to diary.title, diary_path(diary) %></li>
-        <% end %>
-      </ul>
-    <% when "users" %>
-      <h2>ユーザー</h2>
-      <ul>
-        <% @results.each do |user| %>
-          <li><%= link_to user.name, user_path(user) %></li>
-        <% end %>
-      </ul>
+
+  <h2>ゲーム</h2>
+  <% if @games.any? %>
+    <% @games.each do |game| %>
+      <p>
+        <%= link_to game.name, game_path(game) %>
+      </p>
     <% end %>
   <% else %>
-    <p>検索結果が見つかりませんでした。</p>
+    <p>該当するゲームが見つかりませんでした。</p>
   <% end %>
-  </div>
+
+  <h2>日記</h2>
+  <% if @diaries.any? %>
+    <% @diaries.each do |diary| %>
+      <p>
+        <%= link_to diary.title, diary_path(diary) %>
+      </p>
+    <% end %>
+  <% else %>
+    <p>該当する日記が見つかりませんでした。</p>
+  <% end %>
+
+  <h2>イベント</h2>
+  <% if @events.any? %>
+    <% @events.each do |event| %>
+      <p>
+        <%= link_to event.title, event_path(event) %>
+      </p>
+    <% end %>
+  <% else %>
+    <p>該当するイベントが見つかりませんでした。</p>
+  <% end %>
+
+  <h2>ユーザー</h2>
+  <% if @users.any? %>
+    <% @users.each do |user| %>
+      <p>
+        <%= link_to user.name, mypage_users_path(user) %>
+      </p>
+    <% end %>
+  <% else %>
+    <p>該当するユーザーが見つかりませんでした。</p>
+  <% end %>
+</div>

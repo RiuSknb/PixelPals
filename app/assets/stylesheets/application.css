@@ -15,7 +15,10 @@
  */
 
  /* 全体 */
+
+ 
 .container {
+  flex: 1;
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
@@ -75,7 +78,6 @@ h2 {
   text-align: center;
   border-radius: 5px;
 }
-
 .btn-danger:hover {
   background-color: #381616;
   text-decoration: none;
@@ -84,7 +86,7 @@ h2 {
 /* ----------|header|---------- */
 /* ユーザーがログインしている場合のヘッダーのスタイル */
 .header.user-logged-in {
-  background-color: #f0f8ff; /* ユーザー用の背景色 */
+  background-color: #fffaf3; /* ユーザー用の背景色 */
   padding: 10px 20px;  /* 上下10px、左右20pxの余白 */
   text-align: center;  /* テキストを中央揃え */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
@@ -100,7 +102,7 @@ h2 {
 
 /* ゲスト（未ログイン）状態の場合のヘッダーのスタイル */
 .header {
-  background-color: #f0f8ff; /* ゲスト用の背景色 */
+  background-color: #fffaf3; /* ゲスト用の背景色 */
   padding: 10px 20px;  /* 上下10px、左右20pxの余白 */
   text-align: center;  /* テキストを中央揃え */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 軽いシャドウを追加 */
@@ -121,7 +123,7 @@ h2 {
 
 .nav-links a {
   text-decoration: none;  /* リンクの下線を消す */
-  color: #007bff;  /* リンクの色を青に */
+  color: #505458;  /* リンクの色を青に */
   font-weight: 600;  /* リンク文字を少し太く */
   margin: 0 8px;  /* リンクの間に余白を追加 */
 }
@@ -133,7 +135,7 @@ h2 {
 /* ------------------------------*/
 /* ----------|footer|---------- */
 .footer {
-  background-color: #f0f8ff;  /* 背景色を淡い青に設定 */
+  background-color: #fffaf3;  /* ユーザーの背景色 */
   padding: 20px 0;  /* 上下に20pxの余白 */
   text-align: center;  /* テキストを中央揃え */
   font-size: 1rem;  /* フォントサイズ */
@@ -158,7 +160,7 @@ h2 {
   color: #0056b3;  /* ホバー時の色を変更 */
   text-decoration: underline;  /* ホバー時に下線を表示 */
 }
-/* ------------------------------ */
+
 /* ----------|MyPage|---------- */
 /* マイページのタイトル */
 .mypage-title {
@@ -212,6 +214,8 @@ h2 {
 }
 
 .diary-table th, .diary-table td {
+  line-height: 1.8; /* 任意の値を指定 */
+  height: 62px; /* 必要に応じて高さを指定 */
   padding: 12px;
   text-align: left;
   font-size: 1rem;
@@ -253,6 +257,8 @@ h2 {
 }
 
 .event-table th, .event-table td {
+  line-height: 1.8; /* 任意の値を指定 */
+  height: 62px; /* 必要に応じて高さを指定 */
   padding: 12px;
   text-align: left;
   font-size: 1rem;
@@ -311,11 +317,6 @@ h2 {
     padding: 15px;
   }
 }
-/* ------------------------------ */
-
-
-/* ----------|diary/index|---------- */
-/* ------------------------------ */
 
 /* ----------|Game/index|---------- */
 ul.game-list {
@@ -351,8 +352,6 @@ li.game-item {
   color: #007bff;
   transition: all 0.3s ease;
 }
-
-/* ------------------------------ */
 /* ----------|Diary/show|---------- */
 /* 日記詳細ページの全体的なスタイル */
 h1.diary-title {
@@ -366,7 +365,7 @@ h1.diary-title {
 .diary-body {
   font-size: 1.25rem;
   color: #555;
-  line-height: 1.6;
+  line-height: 1.8;
   margin-bottom: 30px;
   padding: 20px;
   background-color: #ffffff;
@@ -405,7 +404,6 @@ h1.diary-title {
   }
 }
 
-/* ------------------------------ */
 /* ----------|Diary/new|---------- */
 /* フォーム全体のスタイル */
 .form-container {
@@ -498,14 +496,3 @@ h1.diary-title {
     font-size: 1rem;
   }
 }
-/* ------------------------------ */
-/* ----------||---------- */
-/* ------------------------------ */
-/* ----------||---------- */
-/* ------------------------------ */
-/* ----------||---------- */
-/* ------------------------------ */
-/* ----------||---------- */
-/* ------------------------------ */
-/* ----------||---------- */
-/* ------------------------------ */

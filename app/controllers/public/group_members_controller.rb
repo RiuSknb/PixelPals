@@ -14,6 +14,12 @@ class Public::GroupMembersController < ApplicationController
 
   def create
     @group = Group.find(params[:group_id]) # グループを取得
+
+    if params[:user_id].blank?
+      redirect_to group_path(@group), alert: 'ユーザーIDが指定されていません。'
+      return
+    end
+  
   
     if params[:user_id].to_i == current_user.id
       # 非加入者が加入申請を行う処理
@@ -115,7 +121,7 @@ class Public::GroupMembersController < ApplicationController
     # Rails.logger.debug "Group Member: #{@group_member.inspect}"  # @group_memberの内容
   
     if @group_member.status == '了承待ち'
-      @group_member.update(status: '承認済み')  # ステータスを更新
+      @group_member.update(status: '承認済み', role: 'メンバー')  # ステータスを更新
       redirect_to group_path(@group), notice: "グループへ参加しました。"
     else
       redirect_to group_path(@group), alert: "この申請は承認待ちではありません。"

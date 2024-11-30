@@ -1,8 +1,82 @@
 <div class='container'>
+  <!-- ゲーム名の表示 -->
   <h1><%= @game.name %></h1>
-  <p>このゲームについて...(public/games/show)</p>
-  <%= link_to '日記を投稿！', new_diary_path(game_id: @game.id) %><br>
-  <%= link_to 'イベントを開催！', new_event_path(game_id: @game.id) %><br>
-  <%= link_to 'グループを作成する！', new_group_path(game_id: @game.id) %>
+
+  <!-- Diaries一覧の表示 -->
+  <h2>関連する日記一覧</h2>
+  <% if @diaries.any? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>投稿者</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @diaries.each do |diary| %>
+          <tr>
+            <td><%= diary.title %></td>
+            <td><%= diary.user.name %></td>
+            <td><%= link_to '詳細を見る', diary_path(diary) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>関連する日記がまだありません。</p>
+  <% end %>
 </div>
-<%= link_to 'ゲーム一覧へ戻る', games_path %> <!-- ゲーム一覧に戻るリンク -->
+<div class='container'>
+  <!-- Events一覧の表示 -->
+  <h2>関連するイベント一覧</h2>
+  <% if @events.any? %>
+    <table class="table table-striped col-div-2">
+      <thead>
+        <tr>
+          <th>イベント名</th>
+          <th>開催日</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @events.each do |event| %>
+          <tr>
+            <td><%= event.title %></td>
+            <td><%= event.date.strftime("%Y/%m/%d %H:%M") %></td>
+            <td><%= link_to '詳細を見る', event_path(event) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>関連するイベントがまだありません。</p>
+  <% end %>
+</div>
+    <!-- Events一覧の表示 -->
+<div class='container'>
+  <h2>関連するグループ一覧</h2>
+  <% if @groups.any? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>イベント名</th>
+          <th>開催日</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @groups.each do |group| %>
+          <tr>
+            <td><%= group.title %></td>
+            <td><%= group.date.strftime("%Y/%m/%d %H:%M") %></td>
+            <td><%= link_to '詳細を見る', group_path(group) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>関連するイベントがまだありません。</p>
+  <% end %>
+  <%= link_to 'ゲーム一覧へ戻る', games_path %>
+</div>

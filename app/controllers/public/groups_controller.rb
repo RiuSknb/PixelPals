@@ -1,6 +1,7 @@
 class Public::GroupsController < ApplicationController
   before_action :set_group, only: %i[show destroy]
   before_action :authenticate_user!, only: [:index,:show]
+  before_action :set_background_image
 
   def new
     @group = Group.new
@@ -42,6 +43,10 @@ class Public::GroupsController < ApplicationController
   end
 
   private
+
+  def set_background_image
+    @background_image = 'cat_r.jpg'
+  end
 
   def group_params
     params.require(:group).permit(:name, :body, :is_public, :game_id, :genre_id)
