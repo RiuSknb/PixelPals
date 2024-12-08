@@ -17,5 +17,6 @@ class SearchesController < ApplicationController
     end
 
     render :result
+    
   end
 end
