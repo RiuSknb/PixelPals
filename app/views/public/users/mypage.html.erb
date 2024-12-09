@@ -32,13 +32,18 @@
       <% end %>
 
     <!-- 了承待ちのグループ -->
-    <p><strong>あなたに以下のグループへの勧誘が来ています！</strong></p>
-    <% @user.groups.each do |group| %>
+    <p><strong>勧誘を受けているグループ</strong></p>
+    <% pending_groups = @user.groups.select do |group| %>
       <% group_member = group.group_members.find_by(user: @user) %>
-      <% if group_member.present? && group_member.status == "了承待ち" %>
-      
+      <% group_member.present? && group_member.status == "了承待ち" %>
+    <% end %>
+
+    <% if pending_groups.any? %>
+      <% pending_groups.each do |group| %>
         <p>・<%= link_to group.name, group_path(group) %></p>
       <% end %>
+    <% else %>
+      <p>まだありません</p>
     <% end %>
   </div>
 </div>
