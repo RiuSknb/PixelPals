@@ -1,0 +1,26 @@
+<div class="container">
+  <h1><%= @group.name %>のチャット</h1>
+
+  <!-- メッセージ一覧 -->
+  <div class="group_messages">
+    <% @group_messages.each do |group_message| %>
+      <div class="group_message">
+        <p><strong><%= group_message.user.name %>:</strong> <%= group_message.content %></p>
+        <p class="timestamp"><%= group_message.created_at.strftime('%Y-%m-%d %H:%M') %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 新しいメッセージ投稿フォーム -->
+  <div class="group_message-form">
+    <%= form_with model: [@group, @group.group_messages.build], local: true do |form| %>
+      <div>
+        <%= form.label :content, "メッセージを入力" %>
+        <%= form.text_area :content, rows: 3, placeholder: "ここにメッセージを入力してください" %>
+      </div>
+      <div>
+        <%= form.submit "送信", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

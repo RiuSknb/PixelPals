@@ -4,6 +4,7 @@ class Group < ApplicationRecord
   belongs_to :game, optional: true
   has_many :group_members, dependent: :destroy
   has_many :members, through: :group_members, source: :user
+  has_many :group_messages, dependent: :destroy
 
   before_validation :set_genre_id
 
