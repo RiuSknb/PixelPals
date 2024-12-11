@@ -53,10 +53,9 @@ Rails.application.routes.draw do
           patch 'accept_invitation'  # 「招待を受け入れる」アクションのルート
         end
       end
-    end
 
-    # # Group_membersコントローラ
-    # resources :group_members
+      resources :group_messages, only: [:index, :create]
+    end
   end
 
   # --------------------------------------------------
