@@ -60,29 +60,29 @@ class Public::GroupMembersController < ApplicationController
   def update
     group_member = @group.group_members.find(params[:id])
   
-    if params[:group_member].key?(:role) && @group.owner_id == current_user.id
-      # 役割変更処理
-      if group_member.update(role_params)
-        redirect_to group_path(@group), notice: "メンバーの役割が変更されました。"
-      else
-        redirect_to group_path(@group), alert: "役割の変更に失敗しました。"
-      end
-    elsif params[:group_member].key?(:status)
+    if params[:group_member].key?(:status)
       # ステータス変更処理（承認待ち、承認済みなど）
       if params[:group_member][:status] == "BAN"
-        # ステータス変更時、BANが送信された場合、BAN処理を実行
+        # BAN処理
         if group_member.update(status: "BAN")
           redirect_to group_path(@group), notice: "#{group_member.user.name} さんをBANしました。"
         else
           redirect_to group_path(@group), alert: "BAN処理に失敗しました。"
         end
       else
-        # その他のステータス変更（承認など）
-        if group_member.update(status: params[:group_member][:status])
-          redirect_to group_path(@group), notice: "#{group_member.user.name} さんのステータスを変更しました。"
+        # 承認処理（ステータス変更とロール変更）
+        if group_member.update(status: "承認済み", role: "メンバー")
+          redirect_to group_path(@group), notice: "#{group_member.user.name} さんのステータスを承認し、役割をメンバーに変更しました。"
         else
           redirect_to group_path(@group), alert: "ステータスの変更に失敗しました。"
         end
+      end
+    elsif params[:group_member].key?(:role) && @group.owner_id == current_user.id
+      # 役割変更処理
+      if group_member.update(role_params)
+        redirect_to group_path(@group), notice: "#{group_member.user.name} さんのロールが変更されました。"
+      else
+        redirect_to group_path(@group), alert: "役割の変更に失敗しました。"
       end
     else
       redirect_to group_path(@group), alert: "ステータス変更が無効です。"
