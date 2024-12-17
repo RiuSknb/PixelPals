@@ -94,7 +94,7 @@ class Public::GroupMembersController < ApplicationController
     if group_member.destroy
       redirect_to group_path(@group), notice: "メンバーを削除しました。"
     else
-      redirect_to group_path(@group), alert: "削除に失敗しました。"
+      redirect_to group_path(@group), alert: "削除に失敗しました"
     end
   end
 
