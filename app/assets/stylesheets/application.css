@@ -219,6 +219,7 @@ h2 {
 /* 日記一覧テーブル（MyPage, Diary/index） */
 .diary-table {
   width: 100%;
+  text-align: center;
   border-collapse: collapse;
   background-color: #fff;
   border-radius: 8px;
@@ -234,8 +235,8 @@ h2 {
   line-height: 1.8; /* 任意の値を指定 */
   height: 62px; /* 必要に応じて高さを指定 */
   padding: 12px;
-  text-align: left;
   font-size: 1rem;
+  text-align: center;
 }
 
 .diary-table tr:nth-child(even) {
@@ -262,6 +263,7 @@ h2 {
 /* イベント一覧テーブル（MyPage, Event/index） */
 .event-table {
   width: 100%;
+  text-align: center;
   border-collapse: collapse;
   background-color: #fff;
   border-radius: 8px;
@@ -277,7 +279,7 @@ h2 {
   line-height: 1.8; /* 任意の値を指定 */
   height: 62px; /* 必要に応じて高さを指定 */
   padding: 12px;
-  text-align: left;
+  text-align: center;
   font-size: 1rem;
 }
 

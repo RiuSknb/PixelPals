@@ -21,7 +21,8 @@
   </div>
 
   <div class='container2'>
-    <h4>コメント一覧</h4>
+    <p><strong>コメント</strong> (<%= @comments.count %> 件)</p>
+    
 
     <% if @comments.any? %>
       <table class="table horizontal-only">
