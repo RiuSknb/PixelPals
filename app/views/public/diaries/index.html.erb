@@ -27,6 +27,9 @@
         </tr>
       <% end %>
     </table>
+    <div class="d-flex justify-content-center">
+      <%= paginate @diaries %> 
+    </div>
   <% else %>
     <p>まだ投稿はありません</p>
   <% end %>

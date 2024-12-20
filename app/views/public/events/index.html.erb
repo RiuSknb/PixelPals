@@ -29,6 +29,9 @@
         </tr>
       <% end %>
     </table>
+    <div class="d-flex justify-content-center">
+      <%= paginate @events %> 
+    </div>
   <% else %>
     <p>まだ投稿はありません</p>
   <% end %>

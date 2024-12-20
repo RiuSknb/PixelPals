@@ -8,7 +8,11 @@ class Public::DiariesController < ApplicationController
   end
 
   def index
-    @diaries = Diary.where(is_deleted: false).includes(:user, :game, :genre).order(created_at: :desc)
+    @diaries = Diary.where(is_deleted: false)
+                    .includes(:user, :game, :genre)
+                    .order(created_at: :desc)
+                    .page(params[:page])
+                    .per(10)
   end
 
   def show
