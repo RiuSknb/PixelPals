@@ -8,7 +8,11 @@ class Public::EventsController < ApplicationController
   end
 
   def index
-    @events = Event.where(is_deleted: false).includes(:user, :game, :genre).order(created_at: :desc)
+    @events = Event.where(is_deleted: false)
+                   .includes(:user, :game, :genre)
+                   .order(created_at: :desc)
+                   .page(params[:page])
+                   .per(10)
   end
 
   def show

@@ -6,35 +6,6 @@
                         ここでは、さまざまな情報を集めて交流の輪を広げることができます。<br>
                         あなたの「楽しい」をもっと広げるコミュニティを一緒に作りましょう！</p>
 </div>
-<div class="container my-4">
-  <div class="p-4 bg-white rounded shadow-sm text-center">
-    <h2 class="text-primary">最近投稿されたイベント</h2>
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th>タイトル</th>
-          <th>作成日</th>
-          <th>ゲーム（ジャンル）</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @recent_events.any? %>
-          <% @recent_events.each do |event| %>
-            <tr>
-              <td><%= link_to event.title, event_path(event) %></td>
-              <td><%= l event.created_at, format: :short %></td>
-              <td><%= event.game.name%>(<%= event.genre.name %>)</td>
-            </tr>
-          <% end %>
-        <% else %>
-          <tr>
-            <td colspan="3">まだありません</td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
 
 <div class="container my-4">
   <div class="p-4 bg-white rounded shadow-sm text-center">
@@ -54,6 +25,36 @@
               <td><%= link_to diary.title, diary_path(diary) %></td>
               <td><%= l diary.created_at, format: :short %></td>
               <td><%= diary.game.name%>(<%= diary.genre.name %>)</td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="3">まだありません</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="container my-4">
+  <div class="p-4 bg-white rounded shadow-sm text-center">
+    <h2 class="text-primary">最近投稿されたイベント</h2>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>作成日</th>
+          <th>ゲーム（ジャンル）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @recent_events.any? %>
+          <% @recent_events.each do |event| %>
+            <tr>
+              <td><%= link_to event.title, event_path(event) %></td>
+              <td><%= l event.created_at, format: :short %></td>
+              <td><%= event.game.name%>(<%= event.genre.name %>)</td>
             </tr>
           <% end %>
         <% else %>
