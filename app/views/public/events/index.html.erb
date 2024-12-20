@@ -1,6 +1,6 @@
 <div class='container'>
   <%= link_to "新規投稿", new_event_path, class: "btn btn-primary" %>
-  <h1>イベント一覧</h1>
+  <h2 style="color:rgb(107, 107, 107); text-align: center; border-bottom: 1px solid rgb(223, 223, 223);">イベント一覧</h2>
   <% if @events.any? %>
     <table class="event-table">
       <tr>
@@ -11,6 +11,7 @@
         <th>開催日時</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
       <% @events.each do |event| %>
         <tr>
@@ -19,6 +20,10 @@
           <td><%= event.genre.name %></td>
           <td><%= link_to event.title, event_path(event) %></td>
           <td><%= event.date.strftime("%Y/%m/%d %H:%M") %></td>
+          <td>
+            <i class="fa-solid fa-comment" style="color:rgb(37, 83, 131);"></i>
+            <span style="color:rgb(37, 83, 131);"><%= event.comments.count %></span>
+          </td>
           <% if event.user == current_user && !event.is_deleted %>
             <td><%= link_to '編集', edit_event_path(event) %>
             <td><%= link_to '削除', event_path(event), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %></td>

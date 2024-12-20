@@ -8,7 +8,10 @@ class Public::GroupsController < ApplicationController
   end
 
   def index
-    @groups = Group.where(is_public: true).or(Group.where(owner_id: current_user.id))
+    @groups = Group.where(is_public: true)
+                   .or(Group.where(owner_id: current_user.id))
+                   .page(params[:page])
+                   .per(10)
   end
 
   def show

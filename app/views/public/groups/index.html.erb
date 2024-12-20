@@ -1,6 +1,7 @@
 <div class='container'>
-  <h1>グループ一覧</h1>
   <%= link_to "新規作成", new_group_path, class: "btn btn-primary" %>
+  <h2 style="color:rgb(107, 107, 107); text-align: center; border-bottom: 1px solid rgb(223, 223, 223);">グループ一覧</h2>
+  
   <% if @groups.any? %>
     <table class="diary-table">
       <tr>
@@ -16,6 +17,9 @@
         </tr>
       <% end %>
     </table>
+    <div class="d-flex justify-content-center">
+      <%= paginate @groups %> 
+    </div>
   <% else %>
     <p>まだグループは作成されていません</p>
   <% end %>
