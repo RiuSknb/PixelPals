@@ -97,7 +97,10 @@
             </td>
             <td><%= event.game.name %> (<%= event.genre.name %>)</td>
             <td><%= event.created_at.strftime('%Y/%m/%d %H:%m') %></td>
-            <td></td>
+            <td>
+              <i class="fa-solid fa-comment" style="color:rgb(37, 83, 131);"></i>
+              <span style="color:rgb(37, 83, 131);"><%= event.comments.count %></span>
+            </td>
           </tr>
         <% end %>
       <% else %>

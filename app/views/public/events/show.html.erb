@@ -10,7 +10,8 @@
     </div>
   <% end %><br>
 
-  <p class="event-body"><strong>イベント内容：</strong><%= @event.body %></p>
+  <p class="event-body"><strong>イベント内容：</strong></p>
+  <p><%= simple_format(@event.body) %></p>
   <p class="event-body"><strong>開催場所：</strong><%= @event.place %></p>
   <p class="event-body"><strong>開催時間：</strong><%= @event.date.strftime("%Y/%m/%d %H:%M") %></p>
 
@@ -46,7 +47,7 @@
                 <% end %>
               </td>
               <td><%= comment.user.name %></td>
-              <td><%= comment.body %></td>
+              <td><%= simple_format(comment.body) %></td>
               <td><small class="text-muted"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></small></td>
               <td>
                 <% if comment.user == current_user %> <!-- 自分のコメントのみ操作可能 -->
