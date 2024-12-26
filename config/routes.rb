@@ -24,9 +24,7 @@ Rails.application.routes.draw do
 
     # Diariesコントローラ
     resources :diaries, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
-      # resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Post' }
-      resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Diary' }
-      # , param: :id, defaults: { commentable_type: 'Event' }を追記
+      resources :likes, only: [:create, :destroy], defaults: { likeable_type: 'Diary' }
     end
 
     # Eventsコントローラ
