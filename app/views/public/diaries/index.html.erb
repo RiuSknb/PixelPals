@@ -10,6 +10,7 @@
         <th>タイトル</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
       <% @diaries.each do |diary| %>
         <tr>
@@ -17,6 +18,9 @@
           <td><%= diary.game.name %></td>
           <td><%= diary.genre.name %></td>
           <td><%= link_to diary.title, diary_path(diary) %></td>
+          <td data-like-id="<%= diary.id %>">
+            <%= render 'public/likes/like_button', diary: diary %>
+          </td>
           <% if diary.user == current_user && !diary.is_deleted %>
             <td><%= link_to '編集', edit_diary_path(diary) %>
             <td><%= link_to '削除', diary_path(diary), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %></td>
