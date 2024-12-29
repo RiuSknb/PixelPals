@@ -50,7 +50,7 @@
               <td><%= simple_format(comment.body) %></td>
               <td><small class="text-muted"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></small></td>
               <td>
-                <% if comment.user == current_user %> <!-- 自分のコメントのみ操作可能 -->
+                <% if comment.user == current_user %>
                   <%= link_to "編集", edit_event_comment_path(comment.commentable_id, comment), class: "btn btn-sm btn-secondary" %>
                   <%= link_to "削除", event_comment_path(comment.commentable_id, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-danger" %>
                 <% end %>
