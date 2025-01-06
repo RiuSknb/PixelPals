@@ -1,5 +1,17 @@
+<% like_count = diary.likes.count %>
+
 <% if current_user.liked?(diary) %>
-  <%= link_to '♥', diary_like_path(diary, current_user.likes.find_by(likeable: diary)), method: :delete, remote: true, class: "like-link" %>
+  <%= link_to diary_like_path(diary, current_user.likes.find_by(likeable: diary)), 
+              method: :delete, 
+              remote: true, 
+              class: "like-link" do %>
+    <i class="fa-solid fa-heart"></i> <span><%= like_count %></span>
+  <% end %>
 <% else %>
-  <%= link_to '♥ いいね', diary_likes_path(diary), method: :post, remote: true, class: "like-link" %>
+  <%= link_to diary_likes_path(diary), 
+              method: :post, 
+              remote: true, 
+              class: "like-link" do %>
+    <i class="fa-regular fa-heart"></i> <span><%= like_count %></span>
+  <% end %>
 <% end %>

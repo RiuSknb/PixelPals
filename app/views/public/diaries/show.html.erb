@@ -1,5 +1,5 @@
 <div class='container'>
-  <h1 class="diary-title"><%= @diary.title %></h1>
+  <h2 style="color:rgb(107, 107, 107); text-align: center; border-bottom: 1px solid rgb(223, 223, 223);"><%= @diary.title %></h2>
   <p>投稿者：<%= link_to @diary.user.name, user_path(@diary.user) %></p>
 
   <% if @diary.user == current_user %>
