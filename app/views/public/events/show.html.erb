@@ -1,5 +1,5 @@
 <div class='container'>
-  <h1 class="event-title"><%= @event.title %></h1>
+  <h2 style="color:rgb(107, 107, 107); text-align: center; border-bottom: 1px solid rgb(223, 223, 223);"><%= @event.title %></h2>
   <p>投稿者：<%= link_to @event.user.name, user_path(@event.user) %></p>
   <p><strong>ゲーム名:</strong> <%= @game.name %></p>
   <p><strong>ジャンル名:</strong> <%= @genre.name %></p>
